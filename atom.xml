@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ev11ccaatt.github.io</id>
     <title>ev11ccaatt</title>
-    <updated>2021-03-21T09:26:46.656Z</updated>
+    <updated>2021-03-21T09:27:58.127Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ev11ccaatt.github.io"/>
     <link rel="self" href="https://ev11ccaatt.github.io/atom.xml"/>
@@ -17,7 +17,6 @@
         </link>
         <updated>2021-03-21T09:24:53.000Z</updated>
         <content type="html"><![CDATA[<p>最近做了几道题其中都有伪协议的出现,那么不如趁此机会，做个伪协议的总结.<br>
-下文中的数据来自自测，多版本则来源互联网。<br>
 环境：</p>
 <h2>0x00</h2>
 version=7.4
