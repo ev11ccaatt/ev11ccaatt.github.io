@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ev11ccaatt.github.io</id>
     <title>ev11ccaatt</title>
-    <updated>2021-03-21T05:31:54.099Z</updated>
+    <updated>2021-03-21T05:35:45.402Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ev11ccaatt.github.io"/>
     <link rel="self" href="https://ev11ccaatt.github.io/atom.xml"/>
@@ -10,6 +10,16 @@
     <logo>https://ev11ccaatt.github.io/images/avatar.png</logo>
     <icon>https://ev11ccaatt.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, ev11ccaatt</rights>
+    <entry>
+        <title type="html"><![CDATA[About me]]></title>
+        <id>https://ev11ccaatt.github.io/post/about-me</id>
+        <link href="https://ev11ccaatt.github.io/post/about-me">
+        </link>
+        <updated>2021-03-21T05:32:28.000Z</updated>
+        <content type="html"><![CDATA[<p>西游挨踢大一学生(CUIT)<br>
+<s>MTX</s></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[BJDCTF2020]ZJCTF，不过如此]]></title>
         <id>https://ev11ccaatt.github.io/post/bjdctf2020zjctfbu-guo-ru-ci</id>
