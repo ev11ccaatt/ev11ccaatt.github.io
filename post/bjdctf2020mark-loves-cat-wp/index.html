@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title> [BJDCTF2020]Mark loves cat wp | Gridea</title>
+<meta name="description" content="温故而知新">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ev11ccaatt.github.io/favicon.ico?v=1616287585589">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ev11ccaatt.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ev11ccaatt.github.io">
+        <img class="avatar" src="https://ev11ccaatt.github.io/images/avatar.png?v=1616287585589" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ev11ccaatt.github.io">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title"> [BJDCTF2020]Mark loves cat wp</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2021-03-20</span>
+            
+          </div>
+          <div class="post-content">
+            <p>进来先浏览网页发现下方有联系方式，和留言框。可能是社工或者xss。</p>
+<p>但还是dirsearch搜索，这里用的py3版本的dirsearh。</p>
+<p>获得index.php。</p>
+<pre><code>&lt;?php
+
+include 'flag.php';
+
+$yds = &quot;dog&quot;;
+$is = &quot;cat&quot;;
+$handsome = 'yds';
+
+foreach($_POST as $x =&gt; $y){
+    $$x = $y;
+}
+
+foreach($_GET as $x =&gt; $y){
+    $$x = $$y;
+}
+
+foreach($_GET as $x =&gt; $y){
+    if($_GET['flag'] === $x &amp;&amp; $x !== 'flag'){
+        exit($handsome);
+    }
+}
+
+if(!isset($_GET['flag']) &amp;&amp; !isset($_POST['flag'])){
+    exit($yds);
+}
+
+if($_POST['flag'] === 'flag'  || $_GET['flag'] === 'flag'){
+    exit($is);
+}
+
+
+
+echo &quot;the flag is: &quot;.$flag;
+</code></pre>
+<p>​	先说下foreach语法.</p>
+<p>eg: foreach ($_Post as $x =&gt; <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mo>)</mo><mi mathvariant="normal">，</mi><mi mathvariant="normal">访</mi><mi mathvariant="normal">问</mi><mi mathvariant="normal">是</mi><mi>p</mi><mi>o</mi><mi>s</mi><mi>t</mi><mi mathvariant="normal">个</mi><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo separator="true">;</mo><mi mathvariant="normal">则</mi><mi mathvariant="normal">此</mi><mi mathvariant="normal">时</mi></mrow><annotation encoding="application/x-tex">y)，访问是post个 a,b;则此时</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">访</span><span class="mord cjk_fallback">问</span><span class="mord cjk_fallback">是</span><span class="mord mathdefault">p</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord cjk_fallback">个</span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mpunct">;</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord cjk_fallback">则</span><span class="mord cjk_fallback">此</span><span class="mord cjk_fallback">时</span></span></span></span>x=a,$y=b;</p>
+<p>然后$$x=$y可以看成 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo></mrow><annotation encoding="application/x-tex">(</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span></span></span></span>x) = <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">即</mi><mi mathvariant="normal">若</mi></mrow><annotation encoding="application/x-tex">y ，即若</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">即</span><span class="mord cjk_fallback">若</span></span></span></span>x的值a，则<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>=</mo></mrow><annotation encoding="application/x-tex">a=</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span></span></span>y。可以通过此处来进行变量覆盖.</p>
+<p>该源码存在四处输出，来依次测试。</p>
+<pre><code>if($_GET['flag'] === $x &amp;&amp; $x !== 'flag')
+</code></pre>
+<p>没想出利用方法,当 传入flag=flag时满足一半条件，无法绕过.</p>
+<pre><code>if(!isset($_GET['flag']) &amp;&amp; !isset($_POST['flag']))
+</code></pre>
+<p>此处易满足条件，那么只需要覆盖<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mi>d</mi><mi>s</mi><mi mathvariant="normal">即</mi><mi mathvariant="normal">可</mi><mo separator="true">,</mo><mi mathvariant="normal">即</mi><mi mathvariant="normal">使</mi></mrow><annotation encoding="application/x-tex">yds即可,即使</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord mathdefault">d</span><span class="mord mathdefault">s</span><span class="mord cjk_fallback">即</span><span class="mord cjk_fallback">可</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord cjk_fallback">即</span><span class="mord cjk_fallback">使</span></span></span></span>yds=$flag; 因为前后都要覆盖则，通过</p>
+<pre><code>foreach($_GET as $x =&gt; $y){
+    $$x = $$y;
+}
+</code></pre>
+<p>来覆盖,以get传入yds=flag即可。</p>
+<pre><code>if($_POST['flag'] === 'flag'  || $_GET['flag'] === 'flag'){
+    exit($is);
+}
+</code></pre>
+<p>要覆盖$is,即替换为is=flag,同时post或get进个flag=flag.</p>
+<pre><code>echo &quot;the flag is: &quot;.$flag;
+</code></pre>
+<p>最好绕过,但需要通过一个变量进行中转来绕过第2,3个if.</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ev11ccaatt.github.io/post/111/">
+              <h3 class="post-title">
+                下一篇：111
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">温故而知新</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ev11ccaatt.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>
