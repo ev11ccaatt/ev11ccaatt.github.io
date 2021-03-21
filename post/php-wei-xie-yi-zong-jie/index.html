@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>About me | ev11ccaatt</title>
+<title>php伪协议总结 | ev11ccaatt</title>
 <meta name="description" content="人菜多学">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,27 +80,66 @@
       <div class="content-container">
         <div class="post-detail">
           
-          <h2 class="post-title">About me</h2>
+          <h2 class="post-title">php伪协议总结</h2>
           <div class="post-info post-detail-info">
             <span><i class="icon-calendar-outline"></i> 2021-03-21</span>
             
           </div>
           <div class="post-content">
-            <p>西游挨踢大一学生(CUIT)<br>
-<s>web</s>misc手<br>
-<s>MTX</s><br>
-个人联系方式<br>
-QQ:2861383861<br>
-提供TG，私聊请.</p>
+            <p>最近做了几道题其中都有伪协议的出现,那么不如趁此机会，做个伪协议的总结.<br>
+下文中的数据来自自测，多版本则来源互联网。<br>
+环境：</p>
+<h2>0x00</h2>
+version=7.4
+<p>php.ini:</p>
+<p>allow_url_fopen: on 默认开启，能够访问url对象文件.</p>
+<p>allow_url_include：off  默认关闭，该选项为on便是允许 包含URL 对象文件等.</p>
+<h2>0x01</h2>
+<h3>【file://协议】</h3>
+<p>php.ini:</p>
+<p>allow_url_fopen: off/on</p>
+<p>allow_url_include：off/on</p>
+<p>用于访问本地文件系统，常用于读取文件.</p>
+<h2>0x02</h2>
+<h3>【php://协议】</h3>
+<p>php.ini:</p>
+<p>allow_url_fopen= off.</p>
+<p>仅php://input,php://stdin,php://memory,php://temp不需要开启allow_url_inclde.</p>
+<p>php://用于访问输入/输出流(I/O streams),比赛中常用的是</p>
+<p>php://filter(读取源码，常配合转换过滤器((<a href="https://www.php.net/manual/zh/filters.convert.php">Conversion Filters</a>,因为若直接读取会执行代码)</p>
+<p>php://input,访问请求的原始数据的只读流，将post中的数据作为php代码执行.</p>
+<h3>【zip://, bzip2://, zlib://协议】</h3>
+<p>PHP.ini：</p>
+<p>zip://, bzip2://, zlib://协议在双off的情况下也可以正常使用；</p>
+<p>allow_url_fopen ：off/on</p>
+<p>allow_url_include：off/on</p>
+<p>zip://, bzip2://, zlib:// 均属于压缩流，可以访问压缩文件中的子文件，更重要的是不需要指定后缀名。</p>
+<p>【zip://协议】</p>
+<p>使用方法：</p>
+<p>zip://archive.zip#dir/file.txt</p>
+<p>zip:// [压缩文件绝对路径]#[压缩文件内的子文件名]</p>
+<p>eg:file=zip://etc/1.zip%23code.txt</p>
+<p>将要执行的php代码文件重命名为.txt ，然后打包成zip，若能直接上传，则直接上传，若不能则改为jpg。</p>
+<p>【bzip2://协议】</p>
+<p>eg:file=compress.bzip2://etc/1.jpg</p>
+<p>【zlib://协议】</p>
+<p>eg:file=compress.zlib://etc/1.jpg</p>
+<h3>【data://协议】</h3>
+<p>PHP.ini：</p>
+<p>allow_url_fopen ：on</p>
+<p>allow_url_include：on</p>
+<p>eg:data://text/plain,&lt;?php phpinfo()&gt;</p>
+<p>data://text/plain,base64,PD9waHAgcGhwaW5mbygpPz4=</p>
+<p>data:text/plain,&lt;?php phpinfo()&gt;</p>
 
           </div>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://ev11ccaatt.github.io/post/bjdctf2020zjctfbu-guo-ru-ci">
+            <a class="purple-link" href="https://ev11ccaatt.github.io/post/about-me">
               <h3 class="post-title">
-                下一篇：[BJDCTF2020]ZJCTF，不过如此
+                下一篇：About me
               </h3>
             </a>
           </div>
