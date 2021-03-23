@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>[BJDCTF2020]ZJCTF，不过如此 | ev11ccaatt</title>
+<title>[CISCN2019 华东南赛区]Web11 | ev11ccaatt</title>
 <meta name="description" content="人菜多学">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,67 +80,34 @@
       <div class="content-container">
         <div class="post-detail">
           
-          <h2 class="post-title">[BJDCTF2020]ZJCTF，不过如此</h2>
+          <h2 class="post-title">[CISCN2019 华东南赛区]Web11</h2>
           <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2021-03-21</span>
+            <span><i class="icon-calendar-outline"></i> 2021-03-23</span>
             
           </div>
           <div class="post-content">
-            <pre><code>&lt;?php
-
-error_reporting(0);
-$text = $_GET[&quot;text&quot;];
-$file = $_GET[&quot;file&quot;];
-if(isset($text)&amp;&amp;(file_get_contents($text,'r')===&quot;I have a dream&quot;)){
-    echo &quot;&lt;br&gt;&lt;h1&gt;&quot;.file_get_contents($text,'r').&quot;&lt;/h1&gt;&lt;/br&gt;&quot;;
-    if(preg_match(&quot;/flag/&quot;,$file)){
-        die(&quot;Not now!&quot;);
-    }
-
-    include($file);  //next.php
-    
-}
-else{
-    highlight_file(__FILE__);
-}
-?&gt;
+            <p>进去先看源代码发现一句</p>
+<pre><code> &lt;p style=&quot;text-align:center;font-size:14px;&quot;&gt;Build With Smarty !&lt;/p&gt;
 </code></pre>
-<p>通过读入text和file来完成验证,由于对text采取的是file_get_contents,则需利用data:数据流封装器.</p>
-<p>无法直接读flag.php，但题目给了下一步的文件next.php。可用php://filter/convert.base64-encode/resource=next.php.</p>
-<p>读取解密后.</p>
-<pre><code>&lt;?php
-$id = $_GET['id'];
-$_SESSION['id'] = $id;
-
-function complex($re, $str) {
-    return preg_replace(
-        '/(' . $re . ')/ei',
-        'strtolower(&quot;\\1&quot;)',
-        $str
-    );
-}
-
-
-foreach($_GET as $re =&gt; $str) {
-    echo complex($re, $str). &quot;\n&quot;;
-}
-
-function getFlag(){
-	@eval($_GET['cmd']);
-}
-
-</code></pre>
-<p>这里利用了preg_replace /e模式下的代码执行问题.([深入研究preg_replace与代码执行](<a href="https://xz.aliyun.com/t/2557">深入研究preg_replace与代码执行 - 先知社区 (aliyun.com)</a>))</p>
-<p>传入\S*=${getflag()}&amp;cmd=system('cat /flag.txt');(注意闭合)</p>
+<p>那么就要测试一下注入点，题目一共提供了三个网址原网址,/api,/xff.</p>
+<p>那么接下来寻找注入点。</p>
+<p>使用tqlmap对三个地址进行测试，均未爆出注入点。</p>
+<p>那么再看看题目，题目中提到X-Forwarded-For，那么注入点会不会存在在这里。</p>
+<p>测试一手XFF={if phpinfo()}{/if} 不用{php}是因为smarty3已废弃{php}标签。</p>
+<p>三个网址均有正确的回显，那么对其继续注入.</p>
+<p>将XFF改为{if system(&quot;ls /&quot;)}{/if}进行测试，只有/api和/xff有正确回显。</p>
+<p>那么读取/flag 即可获得flag.</p>
+<p>这里有多种方法</p>
+<p>system执行系统命令；show_source；readfile；等.</p>
 
           </div>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://ev11ccaatt.github.io/post/bjdctf2020mark-loves-cat-wp">
+            <a class="purple-link" href="https://ev11ccaatt.github.io/post/ciscn-2019-chu-sai-love-math">
               <h3 class="post-title">
-                下一篇： [BJDCTF2020]Mark loves cat wp
+                下一篇：[CISCN 2019 初赛]Love Math
               </h3>
             </a>
           </div>
