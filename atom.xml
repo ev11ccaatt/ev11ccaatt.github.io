@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ev11ccaatt.github.io</id>
     <title>ev11ccaatt</title>
-    <updated>2021-03-31T06:03:10.499Z</updated>
+    <updated>2021-03-31T06:04:32.492Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ev11ccaatt.github.io"/>
     <link rel="self" href="https://ev11ccaatt.github.io/atom.xml"/>
@@ -12,8 +12,8 @@
     <rights>All rights reserved 2021, ev11ccaatt</rights>
     <entry>
         <title type="html"><![CDATA[[BJDCTF 2nd]fake google]]></title>
-        <id>https://ev11ccaatt.github.io/post/bjdctf-2ndfake-google</id>
-        <link href="https://ev11ccaatt.github.io/post/bjdctf-2ndfake-google">
+        <id>https://ev11ccaatt.github.io/post/bjdctf-2ndfake-google/</id>
+        <link href="https://ev11ccaatt.github.io/post/bjdctf-2ndfake-google/">
         </link>
         <updated>2021-03-31T06:00:23.000Z</updated>
         <content type="html"><![CDATA[<p>进去是个搜索框.<br>
@@ -23,8 +23,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[[BJDCTF 2nd]假猪套天下第一]]></title>
-        <id>https://ev11ccaatt.github.io/post/bjdctf-2ndjia-zhu-tao-tian-xia-di-yi</id>
-        <link href="https://ev11ccaatt.github.io/post/bjdctf-2ndjia-zhu-tao-tian-xia-di-yi">
+        <id>https://ev11ccaatt.github.io/post/bjdctf-2ndjia-zhu-tao-tian-xia-di-yi/</id>
+        <link href="https://ev11ccaatt.github.io/post/bjdctf-2ndjia-zhu-tao-tian-xia-di-yi/">
         </link>
         <updated>2021-03-30T14:44:08.000Z</updated>
         <content type="html"><![CDATA[<p>不是很想写，但还是做个记录，添加一系列的头。就能拿到一串base64。</p>
@@ -32,8 +32,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[[BJDCTF 2nd]old-hack]]></title>
-        <id>https://ev11ccaatt.github.io/post/bjdctf-2ndold-hack</id>
-        <link href="https://ev11ccaatt.github.io/post/bjdctf-2ndold-hack">
+        <id>https://ev11ccaatt.github.io/post/bjdctf-2ndold-hack/</id>
+        <link href="https://ev11ccaatt.github.io/post/bjdctf-2ndold-hack/">
         </link>
         <updated>2021-03-30T14:28:42.000Z</updated>
         <content type="html"><![CDATA[<p>简单的thinkphp漏洞<br>
@@ -43,8 +43,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[[GKCTF2020]EZ三剑客-EzWeb]]></title>
-        <id>https://ev11ccaatt.github.io/post/gkctf2020ez-san-jian-ke-ezweb</id>
-        <link href="https://ev11ccaatt.github.io/post/gkctf2020ez-san-jian-ke-ezweb">
+        <id>https://ev11ccaatt.github.io/post/gkctf2020ez-san-jian-ke-ezweb/</id>
+        <link href="https://ev11ccaatt.github.io/post/gkctf2020ez-san-jian-ke-ezweb/">
         </link>
         <updated>2021-03-30T10:03:13.000Z</updated>
         <content type="html"><![CDATA[<p>进去先看源码提示?serect，随便传入试试得到。</p>
@@ -121,8 +121,8 @@ if __name__==&quot;__main__&quot;:
     </entry>
     <entry>
         <title type="html"><![CDATA[[GKCTF2020]CheckIN]]></title>
-        <id>https://ev11ccaatt.github.io/post/gkctf2020checkin</id>
-        <link href="https://ev11ccaatt.github.io/post/gkctf2020checkin">
+        <id>https://ev11ccaatt.github.io/post/gkctf2020checkin/</id>
+        <link href="https://ev11ccaatt.github.io/post/gkctf2020checkin/">
         </link>
         <updated>2021-03-30T08:46:58.000Z</updated>
         <content type="html"><![CDATA[<p>进去一看能貌似能执行任意代码</p>
@@ -147,8 +147,8 @@ flag文件是0700权限,咱是读不了的。<br>
     </entry>
     <entry>
         <title type="html"><![CDATA[[XMAN2018排位赛]通行证]]></title>
-        <id>https://ev11ccaatt.github.io/post/xman2018-pai-wei-sai-tong-xing-zheng</id>
-        <link href="https://ev11ccaatt.github.io/post/xman2018-pai-wei-sai-tong-xing-zheng">
+        <id>https://ev11ccaatt.github.io/post/xman2018-pai-wei-sai-tong-xing-zheng/</id>
+        <link href="https://ev11ccaatt.github.io/post/xman2018-pai-wei-sai-tong-xing-zheng/">
         </link>
         <updated>2021-03-25T15:43:36.000Z</updated>
         <content type="html"><![CDATA[<p>这道题是水的一题</p>
@@ -171,8 +171,8 @@ flag文件是0700权限,咱是读不了的。<br>
     </entry>
     <entry>
         <title type="html"><![CDATA[[CSAWQual 2019]Web_Unagi]]></title>
-        <id>https://ev11ccaatt.github.io/post/csawqual-2019web_unagi</id>
-        <link href="https://ev11ccaatt.github.io/post/csawqual-2019web_unagi">
+        <id>https://ev11ccaatt.github.io/post/csawqual-2019web_unagi/</id>
+        <link href="https://ev11ccaatt.github.io/post/csawqual-2019web_unagi/">
         </link>
         <updated>2021-03-24T10:30:06.000Z</updated>
         <content type="html"><![CDATA[<p>进去先看几个网页，发现flag在/flag</p>
@@ -200,8 +200,8 @@ flag文件是0700权限,咱是读不了的。<br>
     </entry>
     <entry>
         <title type="html"><![CDATA[友链]]></title>
-        <id>https://ev11ccaatt.github.io/post/you-lian</id>
-        <link href="https://ev11ccaatt.github.io/post/you-lian">
+        <id>https://ev11ccaatt.github.io/post/you-lian/</id>
+        <link href="https://ev11ccaatt.github.io/post/you-lian/">
         </link>
         <updated>2021-03-23T10:31:39.000Z</updated>
         <content type="html"><![CDATA[<p><a href="https://blog.csdn.net/qq_51868336">77pray</a></p>
@@ -209,8 +209,8 @@ flag文件是0700权限,咱是读不了的。<br>
     </entry>
     <entry>
         <title type="html"><![CDATA[[CISCN2019 华东南赛区]Web11]]></title>
-        <id>https://ev11ccaatt.github.io/post/ciscn2019-hua-dong-nan-sai-qu-web11</id>
-        <link href="https://ev11ccaatt.github.io/post/ciscn2019-hua-dong-nan-sai-qu-web11">
+        <id>https://ev11ccaatt.github.io/post/ciscn2019-hua-dong-nan-sai-qu-web11/</id>
+        <link href="https://ev11ccaatt.github.io/post/ciscn2019-hua-dong-nan-sai-qu-web11/">
         </link>
         <updated>2021-03-23T09:58:56.000Z</updated>
         <content type="html"><![CDATA[<p>进去先看源代码发现一句</p>
@@ -230,8 +230,8 @@ flag文件是0700权限,咱是读不了的。<br>
     </entry>
     <entry>
         <title type="html"><![CDATA[[CISCN 2019 初赛]Love Math]]></title>
-        <id>https://ev11ccaatt.github.io/post/ciscn-2019-chu-sai-love-math</id>
-        <link href="https://ev11ccaatt.github.io/post/ciscn-2019-chu-sai-love-math">
+        <id>https://ev11ccaatt.github.io/post/ciscn-2019-chu-sai-love-math/</id>
+        <link href="https://ev11ccaatt.github.io/post/ciscn-2019-chu-sai-love-math/">
         </link>
         <updated>2021-03-22T07:43:58.000Z</updated>
         <content type="html"><![CDATA[<pre><code>&lt;?php
