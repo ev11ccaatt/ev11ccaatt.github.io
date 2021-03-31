@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ev11ccaatt.github.io</id>
     <title>ev11ccaatt</title>
-    <updated>2021-03-30T10:53:38.563Z</updated>
+    <updated>2021-03-31T06:03:10.499Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ev11ccaatt.github.io"/>
     <link rel="self" href="https://ev11ccaatt.github.io/atom.xml"/>
@@ -10,6 +10,37 @@
     <logo>https://ev11ccaatt.github.io/images/avatar.png</logo>
     <icon>https://ev11ccaatt.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, ev11ccaatt</rights>
+    <entry>
+        <title type="html"><![CDATA[[BJDCTF 2nd]fake google]]></title>
+        <id>https://ev11ccaatt.github.io/post/bjdctf-2ndfake-google</id>
+        <link href="https://ev11ccaatt.github.io/post/bjdctf-2ndfake-google">
+        </link>
+        <updated>2021-03-31T06:00:23.000Z</updated>
+        <content type="html"><![CDATA[<p>进去是个搜索框.<br>
+试试{{config}}，有回显,说明是个ssti.<br>
+那么就用tplmap一把嗦。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[BJDCTF 2nd]假猪套天下第一]]></title>
+        <id>https://ev11ccaatt.github.io/post/bjdctf-2ndjia-zhu-tao-tian-xia-di-yi</id>
+        <link href="https://ev11ccaatt.github.io/post/bjdctf-2ndjia-zhu-tao-tian-xia-di-yi">
+        </link>
+        <updated>2021-03-30T14:44:08.000Z</updated>
+        <content type="html"><![CDATA[<p>不是很想写，但还是做个记录，添加一系列的头。就能拿到一串base64。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[BJDCTF 2nd]old-hack]]></title>
+        <id>https://ev11ccaatt.github.io/post/bjdctf-2ndold-hack</id>
+        <link href="https://ev11ccaatt.github.io/post/bjdctf-2ndold-hack">
+        </link>
+        <updated>2021-03-30T14:28:42.000Z</updated>
+        <content type="html"><![CDATA[<p>简单的thinkphp漏洞<br>
+5.0.23洞直接打<br>
+不多说</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[GKCTF2020]EZ三剑客-EzWeb]]></title>
         <id>https://ev11ccaatt.github.io/post/gkctf2020ez-san-jian-ke-ezweb</id>
@@ -241,126 +272,6 @@ if(!isset($_GET['c'])){
 得到payload.</p>
 <pre><code>c=$pi=base_convert(37907361743,10,36)(dechex(1598506324));($$pi){pi}(($$pi){cos})&amp;pi=system&amp;cos=cat /flag
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[php伪协议总结]]></title>
-        <id>https://ev11ccaatt.github.io/post/php-wei-xie-yi-zong-jie</id>
-        <link href="https://ev11ccaatt.github.io/post/php-wei-xie-yi-zong-jie">
-        </link>
-        <updated>2021-03-21T09:24:53.000Z</updated>
-        <content type="html"><![CDATA[<p>最近做了几道题其中都有伪协议的出现,那么不如趁此机会，做个伪协议的总结.<br>
-环境：</p>
-<h2>0x00</h2>
-version=7.4
-<p>php.ini:</p>
-<p>allow_url_fopen: on 默认开启，能够访问url对象文件.</p>
-<p>allow_url_include：off  默认关闭，该选项为on便是允许 包含URL 对象文件等.</p>
-<h2>0x01</h2>
-<h3>【file://协议】</h3>
-<p>php.ini:</p>
-<p>allow_url_fopen: off/on</p>
-<p>allow_url_include：off/on</p>
-<p>用于访问本地文件系统，常用于读取文件.</p>
-<h2>0x02</h2>
-<h3>【php://协议】</h3>
-<p>php.ini:</p>
-<p>allow_url_fopen= off.</p>
-<p>仅php://input,php://stdin,php://memory,php://temp不需要开启allow_url_inclde.</p>
-<p>php://用于访问输入/输出流(I/O streams),比赛中常用的是</p>
-<p>php://filter(读取源码，常配合转换过滤器((<a href="https://www.php.net/manual/zh/filters.convert.php">Conversion Filters</a>,因为若直接读取会执行代码)</p>
-<p>php://input,访问请求的原始数据的只读流，将post中的数据作为php代码执行.</p>
-<h3>【zip://, bzip2://, zlib://协议】</h3>
-<p>PHP.ini：</p>
-<p>zip://, bzip2://, zlib://协议在双off的情况下也可以正常使用；</p>
-<p>allow_url_fopen ：off/on</p>
-<p>allow_url_include：off/on</p>
-<p>zip://, bzip2://, zlib:// 均属于压缩流，可以访问压缩文件中的子文件，更重要的是不需要指定后缀名。</p>
-<p>【zip://协议】</p>
-<p>使用方法：</p>
-<p>zip://archive.zip#dir/file.txt</p>
-<p>zip:// [压缩文件绝对路径]#[压缩文件内的子文件名]</p>
-<p>eg:file=zip://etc/1.zip%23code.txt</p>
-<p>将要执行的php代码文件重命名为.txt ，然后打包成zip，若能直接上传，则直接上传，若不能则改为jpg。</p>
-<p>【bzip2://协议】</p>
-<p>eg:file=compress.bzip2://etc/1.jpg</p>
-<p>【zlib://协议】</p>
-<p>eg:file=compress.zlib://etc/1.jpg</p>
-<h3>【data://协议】</h3>
-<p>PHP.ini：</p>
-<p>allow_url_fopen ：on</p>
-<p>allow_url_include：on</p>
-<p>eg:data://text/plain,&lt;?php phpinfo()&gt;</p>
-<p>data://text/plain,base64,PD9waHAgcGhwaW5mbygpPz4=</p>
-<p>data:text/plain,&lt;?php phpinfo()&gt;</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[About me]]></title>
-        <id>https://ev11ccaatt.github.io/post/about-me</id>
-        <link href="https://ev11ccaatt.github.io/post/about-me">
-        </link>
-        <updated>2021-03-21T05:32:28.000Z</updated>
-        <content type="html"><![CDATA[<p>西游挨踢大一学生(CUIT)<br>
-<s>web</s>misc手<br>
-<s>MTX</s><br>
-个人联系方式<br>
-QQ:2861383861<br>
-提供TG，私聊请.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[BJDCTF2020]ZJCTF，不过如此]]></title>
-        <id>https://ev11ccaatt.github.io/post/bjdctf2020zjctfbu-guo-ru-ci</id>
-        <link href="https://ev11ccaatt.github.io/post/bjdctf2020zjctfbu-guo-ru-ci">
-        </link>
-        <updated>2021-03-21T05:16:20.000Z</updated>
-        <content type="html"><![CDATA[<pre><code>&lt;?php
-
-error_reporting(0);
-$text = $_GET[&quot;text&quot;];
-$file = $_GET[&quot;file&quot;];
-if(isset($text)&amp;&amp;(file_get_contents($text,'r')===&quot;I have a dream&quot;)){
-    echo &quot;&lt;br&gt;&lt;h1&gt;&quot;.file_get_contents($text,'r').&quot;&lt;/h1&gt;&lt;/br&gt;&quot;;
-    if(preg_match(&quot;/flag/&quot;,$file)){
-        die(&quot;Not now!&quot;);
-    }
-
-    include($file);  //next.php
-    
-}
-else{
-    highlight_file(__FILE__);
-}
-?&gt;
-</code></pre>
-<p>通过读入text和file来完成验证,由于对text采取的是file_get_contents,则需利用data:数据流封装器.</p>
-<p>无法直接读flag.php，但题目给了下一步的文件next.php。可用php://filter/convert.base64-encode/resource=next.php.</p>
-<p>读取解密后.</p>
-<pre><code>&lt;?php
-$id = $_GET['id'];
-$_SESSION['id'] = $id;
-
-function complex($re, $str) {
-    return preg_replace(
-        '/(' . $re . ')/ei',
-        'strtolower(&quot;\\1&quot;)',
-        $str
-    );
-}
-
-
-foreach($_GET as $re =&gt; $str) {
-    echo complex($re, $str). &quot;\n&quot;;
-}
-
-function getFlag(){
-	@eval($_GET['cmd']);
-}
-
-</code></pre>
-<p>这里利用了preg_replace /e模式下的代码执行问题.<a href="https://xz.aliyun.com/t/2557">深入研究preg_replace与代码执行 - 先知社区 (aliyun.com)</a></p>
-<p>传入\S*=${getflag()}&amp;cmd=system('cat /flag.txt');(注意闭合)</p>
 ]]></content>
     </entry>
 </feed>
