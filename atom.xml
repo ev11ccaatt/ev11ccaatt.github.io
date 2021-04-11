@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ev11ccaatt.github.io</id>
     <title>ev11ccaatt</title>
-    <updated>2021-04-08T10:43:35.257Z</updated>
+    <updated>2021-04-11T04:53:21.797Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ev11ccaatt.github.io"/>
     <link rel="self" href="https://ev11ccaatt.github.io/atom.xml"/>
@@ -10,6 +10,32 @@
     <logo>https://ev11ccaatt.github.io/images/avatar.png</logo>
     <icon>https://ev11ccaatt.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, ev11ccaatt</rights>
+    <entry>
+        <title type="html"><![CDATA[ctfshow 阿拉丁]]></title>
+        <id>https://ev11ccaatt.github.io/post/ctfshow-a-la-ding/</id>
+        <link href="https://ev11ccaatt.github.io/post/ctfshow-a-la-ding/">
+        </link>
+        <updated>2021-04-08T15:54:20.000Z</updated>
+        <content type="html"><![CDATA[<p>emmm，这道题很水。<br>
+主要是写个py脚本，所以记录一下。</p>
+<pre><code>import requests
+import json
+flag= ''
+url = 'http://3b6d2cbe-d77a-4920-8246-f9c7b4eec55e.challenge.ctf.show:8080/'
+for i in range(1,50):
+    data = {
+        'wish':&quot;flag的第{}位是什么?&quot;.format(i)
+        }
+    heads ={'Content-Type': 'application/json'}
+    r =requests.post(url=url,headers=heads,data=json.dumps(data));
+    if i&lt;10:
+        flag+=r.text[8:]
+    else:
+        flag+=r.text[9:]
+print(flag)
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[BJDCTF 2nd]Schrödinger]]></title>
         <id>https://ev11ccaatt.github.io/post/bjdctf-2ndschrodinger/</id>
@@ -264,30 +290,6 @@ flag文件是0700权限,咱是读不了的。<br>
 <p>想着要不要通过执行来获取权限，但没找到。<br>
 去看下wp，发现bypass disable_function，通过<a href="https://github.com/mm0r1/exploits/blob/master/php7-gc-bypass/exploit.php">exp</a>直接打。<br>
 在/var/lock权限是1777，上传到此处,然后直接手动include即可。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[XMAN2018排位赛]通行证]]></title>
-        <id>https://ev11ccaatt.github.io/post/xman2018-pai-wei-sai-tong-xing-zheng/</id>
-        <link href="https://ev11ccaatt.github.io/post/xman2018-pai-wei-sai-tong-xing-zheng/">
-        </link>
-        <updated>2021-03-25T15:43:36.000Z</updated>
-        <content type="html"><![CDATA[<p>这道题是水的一题</p>
-<p>这两天身体不舒服，水一下。</p>
-<p>下载</p>
-<pre><code>a2FuYmJyZ2doamx7emJfX19ffXZ0bGFsbg==
-</code></pre>
-<p>base64解密</p>
-<pre><code>kanbbrgghjl{zb____}vtlaln
-</code></pre>
-<p>这里卡了一会，以为要翻转，但翻过来明显不对劲，考虑下栅栏.</p>
-<p>在cyberchef试了下，竟然不是解密而是加密，key为7.</p>
-<pre><code>kzna{blnl_abj_lbh_trg_vg}
-</code></pre>
-<p>最后一步很明显了凯撒移位。（https://planetcalc.com/1434/）</p>
-<pre><code>ROT13	xman{oyay_now_you_get_it}
-</code></pre>
-<p>收工，睡觉.</p>
 ]]></content>
     </entry>
 </feed>
