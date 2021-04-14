@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ev11ccaatt.github.io</id>
     <title>ev11ccaatt</title>
-    <updated>2021-04-11T04:53:21.797Z</updated>
+    <updated>2021-04-14T16:23:21.259Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ev11ccaatt.github.io"/>
     <link rel="self" href="https://ev11ccaatt.github.io/atom.xml"/>
@@ -10,6 +10,44 @@
     <logo>https://ev11ccaatt.github.io/images/avatar.png</logo>
     <icon>https://ev11ccaatt.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, ev11ccaatt</rights>
+    <entry>
+        <title type="html"><![CDATA[Dc-1]]></title>
+        <id>https://ev11ccaatt.github.io/post/dc-1/</id>
+        <link href="https://ev11ccaatt.github.io/post/dc-1/">
+        </link>
+        <updated>2021-04-14T16:23:00.000Z</updated>
+        <content type="html"><![CDATA[<p>先arp-scan -l扫该段里的机器。</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210414232749062.png?token=AQ4FKAKTCAL56QEMOCLSOJ3AO4FDS" alt="image-20210414232749062" loading="lazy"></figure>
+<p>然后再nmap扫描端口</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210414232815096.png?token=AQ4FKAN2FMTVKHETXUKGTNDAO4FFI" alt="image-20210414232815096" loading="lazy"></figure>
+<p>可以看到开了两个端口，一个ssh，一个80网页。</p>
+<p>先访问网页看看</p>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210414233011191.png?token=AQ4FKAJH6UATATKV2HMF54DAO4FMO" alt="image-20210414233011191" loading="lazy"></figure>
+<p>是个登录窗口，cms是drupal，去找个exp打打试试。</p>
+<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210414233348467.png?token=AQ4FKAJEKUSPYPG4SXPZKJDAO4F2M" alt="image-20210414233348467" loading="lazy"></figure>
+<p>用最新的exploit/unix/webapp/drupal_drupalgeddon2来打。</p>
+<p>就在当前目录下<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210415000124308.png?token=AQ4FKAIDIZMQ75XMNE7QFI3AO4JBM" alt="image-20210415000124308" loading="lazy"></p>
+<p>他让我们去读cms的配置文件，在</p>
+<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210415000250442.png?token=AQ4FKAMWOGAOD76H7QXY7FLAO4JGY" alt="image-20210415000250442" loading="lazy"></figure>
+<p>得到flag2并给了个数据库的账号<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210415000340520.png?token=AQ4FKAJAKC2JCRROPOIYXX3AO4JJ2" alt="image-20210415000340520" loading="lazy"></p>
+<p>先进shell看一下端口<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210415000505666.png?token=AQ4FKAPWM6XJGKU7G4Y5Z3TAO4JPE" alt="image-20210415000505666" loading="lazy"></p>
+<p>数据库开了，用python开个交互式的shell，记住在shell里面开。</p>
+<p>看下user。<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210415000812766.png?token=AQ4FKAP6P3H2NFT2ERPMIADAO4J3E" alt="image-20210415000812766" loading="lazy"></p>
+<p>看到有两个用户，试着直接覆盖admin的密码。</p>
+<figure data-type="image" tabindex="6"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210415001039794.png?token=AQ4FKAKN3CSIIY5F6JL5S6LAO4KEC" alt="image-20210415001039794" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210415001313345.png?token=AQ4FKAKZ22VJXDG3CMNALWLAO4KNW" alt="image-20210415001313345" loading="lazy"></figure>
+<p>然后去网站登录，在dashborad找到flag3</p>
+<figure data-type="image" tabindex="8"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210415001435053.png?token=AQ4FKAKS4J5B5RXOG43SKZLAO4KSY" alt="image-20210415001435053" loading="lazy"></figure>
+<p>有提到passwd，去看下。有个<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210415001524239.png?token=AQ4FKAJWXKTI7OEP7NUIWQTAO4KV2" alt="image-20210415001524239" loading="lazy"></p>
+<p>尝试用hydra来爆破ssh<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210415001621749.png?token=AQ4FKAMHQXTXLJ7BQXN73V3AO4KZO" alt="image-20210415001621749" loading="lazy"></p>
+<p>爆破成功，<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210415001714483.png?token=AQ4FKAMN53VMUYKSRQWSBC3AO4K5C" alt="image-20210415001714483" loading="lazy"></p>
+<p>登陆后得到flag4<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210415001808276.png?token=AQ4FKAO5JLIQT5WSJTDLO6DAO4LAI" alt="image-20210415001808276" loading="lazy"></p>
+<p>有提到root，那么应该是要提权了，先看下suid提权。<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210415001918859.png?token=AQ4FKAN3A5YAZ2PLIZ22VS3AO4LEW" alt="image-20210415001918859" loading="lazy"></p>
+<p>find就有，那么直接 find -exec &quot;/bin/sh&quot; \</p>
+<figure data-type="image" tabindex="9"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210415002029379.png?token=AQ4FKAMJZT4SB3XKJ6D7MB3AO4LI4" alt="image-20210415002029379" loading="lazy"></figure>
+<p>收工，下班。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[ctfshow 阿拉丁]]></title>
         <id>https://ev11ccaatt.github.io/post/ctfshow-a-la-ding/</id>
@@ -264,32 +302,6 @@ if __name__==&quot;__main__&quot;:
 <p>在栏中输入payload（这里我等了一会，就直接burp发了)</p>
 <p>随后访问http://10.0.127.11/shell.php</p>
 <p>得到flag.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[GKCTF2020]CheckIN]]></title>
-        <id>https://ev11ccaatt.github.io/post/gkctf2020checkin/</id>
-        <link href="https://ev11ccaatt.github.io/post/gkctf2020checkin/">
-        </link>
-        <updated>2021-03-30T08:46:58.000Z</updated>
-        <content type="html"><![CDATA[<p>进去一看能貌似能执行任意代码</p>
-<pre><code> $this-&gt;code = @$this-&gt;x()['Ginkgo'];
-                $this-&gt;decode = @base64_decode( $this-&gt;code );
-                @Eval($this-&gt;decode);
-</code></pre>
-<p>那么先来个phpinfo看被禁用的函数.</p>
-<pre><code>pcntl_alarm,pcntl_fork,pcntl_waitpid,pcntl_wait,pcntl_wifexited,pcntl_wifstopped,pcntl_wifsignaled,pcntl_wifcontinued,pcntl_wexitstatus,pcntl_wtermsig,pcntl_wstopsig,pcntl_signal,pcntl_signal_get_handler,pcntl_signal_dispatch,pcntl_get_last_error,pcntl_strerror,pcntl_sigprocmask,pcntl_sigwaitinfo,pcntl_sigtimedwait,pcntl_exec,pcntl_getpriority,pcntl_setpriority,pcntl_async_signals,system,exec,shell_exec,popen,proc_open,passthru,symlink,link,syslog,imap_open,ld,dl,
-</code></pre>
-<p>system，exec被禁，但eval并没有，可以试试一句话木马,eval($_Post[ev1]);<br>
-蚁剑成功上线。<br>
-flag文件是0700权限,咱是读不了的。<br>
-看到下面readflag是个6755权限<br>
-最后一位是</p>
-<pre><code>suid/sgid是为了使“没有取得特权用户要完成一项必须要有特权才可以执行的任务”而产生的。 一般用于给可执行的程序或脚本文件进行设置，其中SUID表示对属主用户增加SET位权限，SGID表示对属组内用户增加SET位权限。执行文件被设置了SUID、SGID权限后，任何用户执行该文件时，将获得该文件属主、属组账号对应的身份。在许多环境中，suid 和 sgid 很管用，但是不恰当地使用这些位可能使系统的安全遭到破坏。所以应该尽量避免使用SET位权限程序。（passwd 命令是为数不多的必须使用“suid”的命令之一）。
-</code></pre>
-<p>想着要不要通过执行来获取权限，但没找到。<br>
-去看下wp，发现bypass disable_function，通过<a href="https://github.com/mm0r1/exploits/blob/master/php7-gc-bypass/exploit.php">exp</a>直接打。<br>
-在/var/lock权限是1777，上传到此处,然后直接手动include即可。</p>
 ]]></content>
     </entry>
 </feed>
