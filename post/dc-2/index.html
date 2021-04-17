@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>DC-2 | ev11ccaatt</title>
+<meta name="description" content="人菜多学">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ev11ccaatt.github.io/favicon.ico?v=1618641729756">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ev11ccaatt.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ev11ccaatt.github.io">
+        <img class="avatar" src="https://ev11ccaatt.github.io/images/avatar.png?v=1618641729756" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ev11ccaatt.github.io">
+        <h1 class="site-title">ev11ccaatt</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ev11ccaatt.github.io/post/you-lian/" class="menu purple-link">
+            友链
+          </a>
+        
+      
+        
+          <a href="https://ev11ccaatt.github.io/post/about-me/" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">DC-2</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2021-04-17</span>
+            
+          </div>
+          <div class="post-content">
+            <p>老样子，上来先扫下ip和端口。</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417140033907.png" alt="image-20210417140033907" loading="lazy"></figure>
+<p>这里需要注意的一点是ssh开在了7744，突破口貌似还在80网页。</p>
+<p>这里需要在hosts添加一条解析才能正常访问</p>
+<p>先看到flag，里面提到了flag1<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417140633487.png" alt="image-20210417140633487" loading="lazy"></p>
+<p>先用wpscan跑下用户名<img src="C:%5CUsers%5CAdministrator%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210417140802601.png" alt="image-20210417140802601" loading="lazy"></p>
+<p>然后用cewl来生成字典<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417141007351.png" alt="image-20210417141007351" loading="lazy">，貌似是遍历网站来生成字典。</p>
+<p>那么直接用wpscan打一下。<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417141452188.png" alt="image-20210417141452188" loading="lazy">有俩，那么去登录吧。</p>
+<p>登录jerry的账号，在page页面找到第二个flag<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417141758345.png" alt="image-20210417141758345" loading="lazy"></p>
+<p>说是wordpress无路可走了，那么想到开头那个奇怪的端口，试试用两个用户去ssh一下。</p>
+<p>cat flag3但是提示<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417142144816.png" alt="image-20210417142144816" loading="lazy">，在<a href="https://fireshellsecurity.team/restricted-linux-shell-escaping-techniques/">Restricted Linux Shell Escaping Techniques | FireShell Security Team</a>找到解决方法，用 BASH_CMDS[a]=/bin/sh;a /bin/bash 来绕过rbash，然后用 export PATH=PATH:/bin:/sbin:/usr/bin:/usr/sbin 来设置环境变量。</p>
+<p>这时候就能有正常的指令了，先看flag3<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417143550090.png" alt="image-20210417143550090" loading="lazy"></p>
+<p>切换到jerry，在/home/jerry下找到flag4,<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417143710184.png" alt="image-20210417143710184" loading="lazy"></p>
+<p>让我们用git提权，<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417144045098.png" alt="image-20210417144045098" loading="lazy">，<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417144102323.png" alt="image-20210417144102323" loading="lazy"></p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417144125359.png" alt="image-20210417144125359" loading="lazy"></figure>
+<p>收工，下班。</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ev11ccaatt.github.io/post/dc-1/">
+              <h3 class="post-title">
+                下一篇：Dc-1
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">人菜多学</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ev11ccaatt.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

