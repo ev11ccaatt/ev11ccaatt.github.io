@@ -5,7 +5,7 @@
     
 <meta charset="utf-8" >
 
-<title>[GKCTF2020]CheckIN | ev11ccaatt</title>
+<title>DC-4 | ev11ccaatt</title>
 <meta name="description" content="人菜多学">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -80,39 +80,36 @@
       <div class="content-container">
         <div class="post-detail">
           
-          <h2 class="post-title">[GKCTF2020]CheckIN</h2>
+          <h2 class="post-title">DC-4</h2>
           <div class="post-info post-detail-info">
-            <span><i class="icon-calendar-outline"></i> 2021-03-30</span>
+            <span><i class="icon-calendar-outline"></i> 2021-04-18</span>
             
           </div>
           <div class="post-content">
-            <p>进去一看能貌似能执行任意代码</p>
-<pre><code> $this-&gt;code = @$this-&gt;x()['Ginkgo'];
-                $this-&gt;decode = @base64_decode( $this-&gt;code );
-                @Eval($this-&gt;decode);
-</code></pre>
-<p>那么先来个phpinfo看被禁用的函数.</p>
-<pre><code>pcntl_alarm,pcntl_fork,pcntl_waitpid,pcntl_wait,pcntl_wifexited,pcntl_wifstopped,pcntl_wifsignaled,pcntl_wifcontinued,pcntl_wexitstatus,pcntl_wtermsig,pcntl_wstopsig,pcntl_signal,pcntl_signal_get_handler,pcntl_signal_dispatch,pcntl_get_last_error,pcntl_strerror,pcntl_sigprocmask,pcntl_sigwaitinfo,pcntl_sigtimedwait,pcntl_exec,pcntl_getpriority,pcntl_setpriority,pcntl_async_signals,system,exec,shell_exec,popen,proc_open,passthru,symlink,link,syslog,imap_open,ld,dl,
-</code></pre>
-<p>system，exec被禁，但eval并没有，可以试试一句话木马,eval($_Post[ev1]);<br>
-蚁剑成功上线。<br>
-flag文件是0700权限,咱是读不了的。<br>
-看到下面readflag是个6755权限<br>
-最后一位是</p>
-<pre><code>suid/sgid是为了使“没有取得特权用户要完成一项必须要有特权才可以执行的任务”而产生的。 一般用于给可执行的程序或脚本文件进行设置，其中SUID表示对属主用户增加SET位权限，SGID表示对属组内用户增加SET位权限。执行文件被设置了SUID、SGID权限后，任何用户执行该文件时，将获得该文件属主、属组账号对应的身份。在许多环境中，suid 和 sgid 很管用，但是不恰当地使用这些位可能使系统的安全遭到破坏。所以应该尽量避免使用SET位权限程序。（passwd 命令是为数不多的必须使用“suid”的命令之一）。
-</code></pre>
-<p>想着要不要通过执行来获取权限，但没找到。<br>
-去看下wp，发现bypass disable_function，通过<a href="https://github.com/mm0r1/exploits/blob/master/php7-gc-bypass/exploit.php">exp</a>直接打。<br>
-在/var/lock权限是1777，上传到此处,然后直接手动include即可。</p>
+            <p>上手扫一扫<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418172024234.png" alt="image-20210418172024234" loading="lazy"></p>
+<p><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418172125542.png" alt="image-20210418172125542" loading="lazy">没东西，那手动上去看看。</p>
+<p><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418172148659.png" alt="image-20210418172148659" loading="lazy">貌似要爆破，那么就去爆破试试<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418173403986.png" alt="image-20210418173403986" loading="lazy"></p>
+<p>上去之后发现貌似可以执行命令，抓个包看下。</p>
+<p>这里改成ls /发过去<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418173619769.png" alt="image-20210418173619769" loading="lazy"></p>
+<p>那么肯定要弹个shell了啊</p>
+<p>先看到个<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418175657883.png" alt="image-20210418175657883" loading="lazy">，那么在backups找到了个密码本。</p>
+<p><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418175329906.png" alt="image-20210418175329906" loading="lazy">那么复制下来爆破一下。</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418180508610.png" alt="image-20210418180508610" loading="lazy"></figure>
+<p>bingo！</p>
+<p><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418180845027.png" alt="image-20210418180845027" loading="lazy">那么去/var/mail看下<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418180922010.png" alt="image-20210418180922010" loading="lazy"></p>
+<p>换个用户，<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418181035292.png" alt="image-20210418181035292" loading="lazy">那么就是用teehee提权。</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418181228961.png" alt="image-20210418181228961" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210418181253439.png" alt="image-20210418181253439" loading="lazy"></figure>
+<p>下班。</p>
 
           </div>
         </div>
 
         
           <div class="next-post">
-            <a class="purple-link" href="https://ev11ccaatt.github.io/post/xman2018-pai-wei-sai-tong-xing-zheng/">
+            <a class="purple-link" href="https://ev11ccaatt.github.io/post/wustctf2020yan-zhi-cheng-ji-cha-xun/">
               <h3 class="post-title">
-                下一篇：[XMAN2018排位赛]通行证
+                下一篇：[WUSTCTF2020]颜值成绩查询
               </h3>
             </a>
           </div>
