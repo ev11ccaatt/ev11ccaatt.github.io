@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ev11ccaatt.github.io</id>
     <title>ev11ccaatt</title>
-    <updated>2021-04-22T06:52:30.446Z</updated>
+    <updated>2021-04-26T08:46:01.904Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ev11ccaatt.github.io"/>
     <link rel="self" href="https://ev11ccaatt.github.io/atom.xml"/>
@@ -10,6 +10,31 @@
     <logo>https://ev11ccaatt.github.io/images/avatar.png</logo>
     <icon>https://ev11ccaatt.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, ev11ccaatt</rights>
+    <entry>
+        <title type="html"><![CDATA[DC-6]]></title>
+        <id>https://ev11ccaatt.github.io/post/dc-6/</id>
+        <link href="https://ev11ccaatt.github.io/post/dc-6/">
+        </link>
+        <updated>2021-04-26T08:45:19.000Z</updated>
+        <content type="html"><![CDATA[<p>先扫下ip和端口<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210421194629537.png" alt="image-20210421194629537" loading="lazy"></p>
+<p>那么去看下有什么东西。</p>
+<p>发现需要先再hosts里解析一下，然后是个wordpress.</p>
+<p>那么wpscan先扫个用户名出来</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210421194726324.png" alt="image-20210421194726324" loading="lazy"></figure>
+<p>老一套，爆破登陆一下<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210421194854319.png" alt="image-20210421194854319" loading="lazy"></p>
+<p>这里有个问题，我没注意到作者在vulnhub上写了密码中包含k01所以这里用时过长，后面提取之后工作量大大减少（合十合十）</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210426161225676.png" alt="image-20210426161225676" loading="lazy"></figure>
+<p>在wordpress的activity monitor 中的tool可以通过lookup利用可随意拼接(127.0.0.1 | ls)来执行任意命令</p>
+<p>这里我选择先弹个shell来方便操作.</p>
+<p>先翻下home里的东西，在mark里找到了一个用户的密码。</p>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210426162832545.png" alt="image-20210426162832545" loading="lazy"></figure>
+<p>切换后先看下sudo -l,说是可以以jens来执行一个文件，那么在那个文件最后添加上/bin/bash即可切换成jens.</p>
+<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210426163550511.png" alt="image-20210426163550511" loading="lazy"></figure>
+<p>这里很明显指向了nmap提权。</p>
+<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210426164436904.png" alt="image-20210426164436904" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210426164458354.png" alt="image-20210426164458354" loading="lazy"></figure>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[DC-9 ]]></title>
         <id>https://ev11ccaatt.github.io/post/dc-9/</id>
@@ -263,39 +288,6 @@ print(flag)
 <p>那么看看人名有啥，先试试admin.出了两个数值，同时cookie多了个dXNlcg，其值貌似能base解密为 1617696743，那么先测试一下，改成空。</p>
 <p>就会弹出 av11664517@1583985203</p>
 <p>b站评论找到flag.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[BJDCTF 2nd]elementmaster]]></title>
-        <id>https://ev11ccaatt.github.io/post/bjdctf-2ndelementmaster/</id>
-        <link href="https://ev11ccaatt.github.io/post/bjdctf-2ndelementmaster/">
-        </link>
-        <updated>2021-04-06T07:30:57.000Z</updated>
-        <content type="html"><![CDATA[<p>一进去先看源码，发现两个id有个怪，转成字符串分别是 Po.  php</p>
-<p>拼接起来，返回了个 .</p>
-<p>没思路了</p>
-<p>看了下wp，原来是个元素周期表的东西。</p>
-<pre><code>import requests
-import time
-url = 'http://2244b9bc-a2ba-4aff-8197-a5fac03cc29b.node3.buuoj.cn/'
-element=['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar',
-        'K', 'Ca', 'Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br',
-        'Kr', 'Rb', 'Sr', 'Y', 'Zr', 'Nb', 'Mo', 'Te', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd', 'In', 'Sn', 'Sb', 'Te',
-        'I', 'Xe', 'Cs', 'Ba', 'La', 'Ce', 'Pr', 'Nd', 'Pm', 'Sm', 'Eu', 'Gd', 'Tb', 'Dy', 'Ho', 'Er', 'Tm',
-        'Yb', 'Lu', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg', 'Tl', 'Pb', 'Bi', 'Po', 'At', 'Rn',
-        'Fr', 'Ra', 'Ac', 'Th', 'Pa', 'U', 'Np', 'Pu', 'Am', 'Cm', 'Bk', 'Cf', 'Es', 'Fm','Md', 'No', 'Lr',
-        'Rf', 'Db', 'Sg', 'Bh', 'Hs', 'Mt', 'Ds', 'Rg', 'Cn', 'Nh', 'Fl', 'Mc', 'Lv', 'Ts', 'Og', 'Uue']
-flag = &quot;&quot;
-for i in element:
-    time.sleep(0.2) #buu特色
-    r = requests.get(url+i+'.php')
-    if &quot;404&quot; not in r.text:
-        flag+=r.text
-    
-print(flag)
-</code></pre>
-<p>得到一个And_th3_3LemEnt5_w1LL_De5tR0y_y0u.php</p>
-<p>访问得到flag.</p>
 ]]></content>
     </entry>
 </feed>
