@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ev11ccaatt.github.io</id>
     <title>ev11ccaatt</title>
-    <updated>2021-06-05T09:08:54.396Z</updated>
+    <updated>2021-06-17T12:18:18.973Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ev11ccaatt.github.io"/>
     <link rel="self" href="https://ev11ccaatt.github.io/atom.xml"/>
@@ -10,6 +10,46 @@
     <logo>https://ev11ccaatt.github.io/images/avatar.png</logo>
     <icon>https://ev11ccaatt.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, ev11ccaatt</rights>
+    <entry>
+        <title type="html"><![CDATA[[HITCON 2017]SSRFme]]></title>
+        <id>https://ev11ccaatt.github.io/post/hitcon-2017ssrfme/</id>
+        <link href="https://ev11ccaatt.github.io/post/hitcon-2017ssrfme/">
+        </link>
+        <updated>2021-06-17T10:39:13.000Z</updated>
+        <content type="html"><![CDATA[<p>这个我先是用非预期做出来，然后觉得不对头，才去看的wp</p>
+<p>先上源码</p>
+<pre><code class="language-php">222.18.127.252 &lt;?php
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $http_x_headers = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        $_SERVER['REMOTE_ADDR'] = $http_x_headers[0];
+    }
+
+    echo $_SERVER[&quot;REMOTE_ADDR&quot;];
+
+    $sandbox = &quot;sandbox/&quot; . md5(&quot;orange&quot; . $_SERVER[&quot;REMOTE_ADDR&quot;]);
+    @mkdir($sandbox);
+    @chdir($sandbox);
+
+    $data = shell_exec(&quot;GET &quot; . escapeshellarg($_GET[&quot;url&quot;]));
+    $info = pathinfo($_GET[&quot;filename&quot;]);
+    $dir  = str_replace(&quot;.&quot;, &quot;&quot;, basename($info[&quot;dirname&quot;]));
+    @mkdir($dir);
+    @chdir($dir);
+    @file_put_contents(basename($info[&quot;basename&quot;]), $data);
+    highlight_file(__FILE__);
+</code></pre>
+<p>前面那个是ip，</p>
+<p>sandbox则是文件上传的地方</p>
+<h2 id="非预期">非预期</h2>
+<p>这个对上传文件没有任何过滤，那么可以考虑传个🐎过去，传的时候用png之类的🐎，php的话，写成明文也能传，然后</p>
+<p>记得把filename的后缀改成php，这样才会解析</p>
+<p>传过去就能直接上🐎</p>
+<h2 id="预期">预期</h2>
+<p>[2.7 <a href="https://da4er.top/2-7-HITCON-2017-SSRFme.html">HITCON 2017]SSRFme - Da4er's Blogs</a></p>
+<p>在这里有详解，但是要注意不能用 /bin/bash 这样的话会在读取的时候/被当成目录路径，然后需要 -c 因为需要将/readflag中的内容当作shell来执行</p>
+<p>。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[xctf final ]]></title>
         <id>https://ev11ccaatt.github.io/post/xctf-final/</id>
@@ -334,32 +374,6 @@ return process.mainModule.require(&quot;child_process&quot;).execSync(&quot;whoa
 <p>find就有，那么直接 find -exec &quot;/bin/sh&quot; \</p>
 <figure data-type="image" tabindex="9"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210415002029379.png" alt="image-20210415002029379" loading="lazy"></figure>
 <p>收工，下班。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ctfshow 阿拉丁]]></title>
-        <id>https://ev11ccaatt.github.io/post/ctfshow-a-la-ding/</id>
-        <link href="https://ev11ccaatt.github.io/post/ctfshow-a-la-ding/">
-        </link>
-        <updated>2021-04-08T15:54:20.000Z</updated>
-        <content type="html"><![CDATA[<p>emmm，这道题很水。<br>
-主要是写个py脚本，所以记录一下。</p>
-<pre><code>import requests
-import json
-flag= ''
-url = 'http://3b6d2cbe-d77a-4920-8246-f9c7b4eec55e.challenge.ctf.show:8080/'
-for i in range(1,50):
-    data = {
-        'wish':&quot;flag的第{}位是什么?&quot;.format(i)
-        }
-    heads ={'Content-Type': 'application/json'}
-    r =requests.post(url=url,headers=heads,data=json.dumps(data));
-    if i&lt;10:
-        flag+=r.text[8:]
-    else:
-        flag+=r.text[9:]
-print(flag)
-</code></pre>
 ]]></content>
     </entry>
 </feed>

