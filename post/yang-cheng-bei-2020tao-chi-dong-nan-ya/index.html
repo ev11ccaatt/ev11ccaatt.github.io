@@ -2,18 +2,22 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>About me | ev11ccaatt</title>
+<title>[羊城杯 2020]逃离东南亚 | ev11ccaatt</title>
 <link rel="shortcut icon" href="https://ev11ccaatt.github.io/favicon.ico?v=1625370621681">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://ev11ccaatt.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="About me | ev11ccaatt - Atom Feed" href="https://ev11ccaatt.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="[羊城杯 2020]逃离东南亚 | ev11ccaatt - Atom Feed" href="https://ev11ccaatt.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="西游挨踢大一学生(CUIT)
-webmisc手
-" />
+    <meta name="description" content="第一层
+pngcheck一下，发现图片高度不对，于是改高度看到，日记二密码：wdnmd
+第二层
+音频silenteyedecode得到密码：This1sThe3rdZIPpwd
+第三层
+在version.h可以看到是libc的2.28
+那么..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -76,11 +80,11 @@ webmisc手
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              About me
+              [羊城杯 2020]逃离东南亚
             </h2>
             <div class="post-info">
               <span>
-                2021-03-21
+                2021-07-04
               </span>
               <span>
                 1 min read
@@ -90,12 +94,60 @@ webmisc手
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>西游挨踢大一学生(CUIT)<br>
-<s>web</s>misc手</p>
+                <h2 id="第一层">第一层</h2>
+<p>pngcheck一下，发现图片高度不对，于是改高度看到，日记二密码：wdnmd</p>
+<h2 id="第二层">第二层</h2>
+<p>音频silenteyedecode得到密码：This1sThe3rdZIPpwd</p>
+<h2 id="第三层">第三层</h2>
+<p>在version.h可以看到是libc的2.28<br>
+那么去diff一下<br>
+可以看到malloc.c不一样</p>
+<pre><code>line=''
+f=open(&quot;malloc.c&quot;,&quot;r&quot;)
+line=f.readline()
+while line:
+    line=f.readline()
+    if '}' in line:
+        flag=0
+        ans=''
+        for i in line:
+            if i == '}':
+                flag=1
+                continue
+            if flag:
+                if i== '\t':
+                    ans+='1'
+                    #print(1,sep='',end='')
+                if i== ' ':
+                    ans+='0'
+                    #print(0,sep='',end='')
+            if len(ans) == 8 and flag == 1:
+                #print(ans,end=' ')
+                break
+        #for i in ans:
+        #print(ans)
+        if len(ans) == 8:
+            #print(ans)
+            #print(int(ans,2))
+            print(chr(int(ans,2)),sep='',end='')
+        ```
+        可以看到这个东西在}后多跟了空格和tab
+        那么提取出来，发现是8位的01，就可以直接转成字符串了。
+            
+</code></pre>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E7%AC%AC%E4%B8%80%E5%B1%82">第一层</a></li>
+<li><a href="#%E7%AC%AC%E4%BA%8C%E5%B1%82">第二层</a></li>
+<li><a href="#%E7%AC%AC%E4%B8%89%E5%B1%82">第三层</a></li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
@@ -104,9 +156,9 @@ webmisc手
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://ev11ccaatt.github.io/post/bjdctf2020zjctfbu-guo-ru-ci/">
+            <a href="https://ev11ccaatt.github.io/post/qwb2021-popmaster/">
               <h3 class="post-title">
-                [BJDCTF2020]ZJCTF，不过如此
+                qwb2021 popmaster
               </h3>
             </a>
           </div>
