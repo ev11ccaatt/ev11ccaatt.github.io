@@ -2,21 +2,19 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ctfshow 阿拉丁 | ev11ccaatt</title>
+<title>做过的靶场汇总， | ev11ccaatt</title>
 <link rel="shortcut icon" href="https://ev11ccaatt.github.io/favicon.ico?v=1628167470180">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://ev11ccaatt.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="ctfshow 阿拉丁 | ev11ccaatt - Atom Feed" href="https://ev11ccaatt.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="做过的靶场汇总， | ev11ccaatt - Atom Feed" href="https://ev11ccaatt.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="emmm，这道题很水。
-主要是写个py脚本，所以记录一下。
-import requests
-import json
-flag= ''
-url = 'http://3b6d2cbe-d77a-4920-8246-f9c7b4eec55e.ch..." />
+    <meta name="description" content="sqlilab
+uploadlab
+MemLabs
+" />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -79,11 +77,11 @@ url = 'http://3b6d2cbe-d77a-4920-8246-f9c7b4eec55e.ch..." />
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              ctfshow 阿拉丁
+              做过的靶场汇总，
             </h2>
             <div class="post-info">
               <span>
-                2021-04-08
+                2021-08-05
               </span>
               <span>
                 1 min read
@@ -93,24 +91,9 @@ url = 'http://3b6d2cbe-d77a-4920-8246-f9c7b4eec55e.ch..." />
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>emmm，这道题很水。<br>
-主要是写个py脚本，所以记录一下。</p>
-<pre><code>import requests
-import json
-flag= ''
-url = 'http://3b6d2cbe-d77a-4920-8246-f9c7b4eec55e.challenge.ctf.show:8080/'
-for i in range(1,50):
-    data = {
-        'wish':&quot;flag的第{}位是什么?&quot;.format(i)
-        }
-    heads ={'Content-Type': 'application/json'}
-    r =requests.post(url=url,headers=heads,data=json.dumps(data));
-    if i&lt;10:
-        flag+=r.text[8:]
-    else:
-        flag+=r.text[9:]
-print(flag)
-</code></pre>
+                <p>sqlilab<br>
+uploadlab<br>
+MemLabs</p>
 
               </div>
               <div class="toc-container">
@@ -123,9 +106,9 @@ print(flag)
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://ev11ccaatt.github.io/post/bjdctf-2ndschrodinger/">
+            <a href="https://ev11ccaatt.github.io/post/yang-cheng-bei-2020tao-chi-dong-nan-ya/">
               <h3 class="post-title">
-                [BJDCTF 2nd]Schrödinger
+                [羊城杯 2020]逃离东南亚
               </h3>
             </a>
           </div>

